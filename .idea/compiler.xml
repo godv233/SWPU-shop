@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="shop-flash" />
+        <module name="shop-index" />
+        <module name="shop-cms" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="shop-cms" target="1.8" />
+      <module name="shop-flash" target="1.8" />
+      <module name="shop-index" target="1.8" />
+      <module name="SWPU-shop" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="SWPU-shop" options="-parameters" />
+      <module name="shop-cms" options="-parameters" />
+      <module name="shop-flash" options="-parameters" />
+      <module name="shop-index" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SWPU-shop.iml" filepath="$PROJECT_DIR$/SWPU-shop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-cms/shop-cms.iml" filepath="$PROJECT_DIR$/shop-cms/shop-cms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-flash/shop-flash.iml" filepath="$PROJECT_DIR$/shop-flash/shop-flash.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-index/shop-index.iml" filepath="$PROJECT_DIR$/shop-index/shop-index.iml" />
+    </modules>
+  </component>
+</project>
