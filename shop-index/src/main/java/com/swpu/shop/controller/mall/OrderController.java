@@ -31,6 +31,13 @@ public class OrderController {
     @Resource
     private NewBeeMallOrderService newBeeMallOrderService;
 
+    /**
+     * 订单详情
+     * @param request
+     * @param orderNo
+     * @param httpSession
+     * @return
+     */
     @GetMapping("/orders/{orderNo}")
     public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
         NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
@@ -42,6 +49,13 @@ public class OrderController {
         return "mall/order-detail";
     }
 
+    /**
+     * 订单列表
+     * @param params
+     * @param request
+     * @param httpSession
+     * @return
+     */
     @GetMapping("/orders")
     public String orderListPage(@RequestParam Map<String, Object> params, HttpServletRequest request, HttpSession httpSession) {
         NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);

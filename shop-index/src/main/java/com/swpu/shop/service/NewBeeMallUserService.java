@@ -1,6 +1,5 @@
 package com.swpu.shop.service;
 
-import com.sun.deploy.net.HttpResponse;
 import com.swpu.shop.common.Constants;
 import com.swpu.shop.common.ServiceResultEnum;
 import com.swpu.shop.controller.vo.NewBeeMallUserVO;
@@ -10,17 +9,16 @@ import com.swpu.shop.redis.RedisService;
 import com.swpu.shop.redis.UserKey;
 import com.swpu.shop.util.BeanUtil;
 import com.swpu.shop.util.MD5Util;
-import com.swpu.shop.util.PageQueryUtil;
-import com.swpu.shop.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.UUID;
 
+/**
+ * @author GODV
+ */
 @Service
 public class NewBeeMallUserService{
 
@@ -29,34 +27,6 @@ public class NewBeeMallUserService{
     @Autowired
     private RedisService redisService;
 
-    public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
-        List<MallUser> mallUsers = mallUserMapper.findMallUserList(pageUtil);
-        int total = mallUserMapper.getTotalMallUsers(pageUtil);
-        PageResult pageResult = new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
-    }
-
-    /**
-     * 注册逻辑
-     * @param loginName
-     * @param password
-     * @return
-     */
-    public String register(String loginName, String password) {
-        if (mallUserMapper.selectByLoginName(loginName) != null) {
-            return ServiceResultEnum.SAME_LOGIN_NAME_EXIST.getResult();
-        }
-        MallUser registerUser = new MallUser();
-        registerUser.setLoginName(loginName);
-        registerUser.setNickName(loginName);
-        String passwordMD5 = MD5Util.MD5Encode(password, "UTF-8");
-        registerUser.setPasswordMd5(passwordMD5);
-        if (mallUserMapper.insertSelective(registerUser) > 0) {
-            return ServiceResultEnum.SUCCESS.getResult();
-        }
-        return ServiceResultEnum.DB_ERROR.getResult();
-    }
-
     /**
      * 登录的逻辑
      * @param loginName
@@ -64,7 +34,6 @@ public class NewBeeMallUserService{
      * @param httpSession
      * @return
      */
-
     public String login(String loginName, String passwordMD5, HttpSession httpSession, HttpServletResponse response) {
         MallUser user = mallUserMapper.selectByLoginNameAndPasswd(loginName, passwordMD5);
         if (user != null && httpSession != null) {
@@ -92,14 +61,32 @@ public class NewBeeMallUserService{
         }
         return ServiceResultEnum.LOGIN_ERROR.getResult();
     }
-
+    /**
+     * 注册逻辑
+     * @param loginName
+     * @param password
+     * @return
+     */
+    public String register(String loginName, String password) {
+        if (mallUserMapper.selectByLoginName(loginName) != null) {
+            return ServiceResultEnum.SAME_LOGIN_NAME_EXIST.getResult();
+        }
+        MallUser registerUser = new MallUser();
+        registerUser.setLoginName(loginName);
+        registerUser.setNickName(loginName);
+        String passwordMD5 = MD5Util.MD5Encode(password, "UTF-8");
+        registerUser.setPasswordMd5(passwordMD5);
+        if (mallUserMapper.insertSelective(registerUser) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
     /**
      * 更新个人信息
      * @param mallUser
      * @param httpSession
      * @return
      */
-
     public NewBeeMallUserVO updateUserInfo(MallUser mallUser, HttpSession httpSession) {
         MallUser user = mallUserMapper.selectByPrimaryKey(mallUser.getUserId());
         if (user != null) {
@@ -115,13 +102,5 @@ public class NewBeeMallUserService{
             }
         }
         return null;
-    }
-
-
-    public Boolean lockUsers(Integer[] ids, int lockStatus) {
-        if (ids.length < 1) {
-            return false;
-        }
-        return mallUserMapper.lockUserBatch(ids, lockStatus) > 0;
     }
 }

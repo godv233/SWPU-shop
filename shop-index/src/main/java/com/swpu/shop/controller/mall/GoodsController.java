@@ -20,6 +20,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * @author GODV
+ */
 @Controller
 public class GoodsController {
 

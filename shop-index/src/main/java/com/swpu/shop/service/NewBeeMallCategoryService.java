@@ -21,59 +21,19 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
+/**
+ * @author GODV
+ */
 @Service
 public class NewBeeMallCategoryService{
 
     @Autowired
     private GoodsCategoryMapper goodsCategoryMapper;
 
-    public PageResult getCategorisPage(PageQueryUtil pageUtil) {
-        List<GoodsCategory> goodsCategories = goodsCategoryMapper.findGoodsCategoryList(pageUtil);
-        int total = goodsCategoryMapper.getTotalGoodsCategories(pageUtil);
-        PageResult pageResult = new PageResult(goodsCategories, total, pageUtil.getLimit(), pageUtil.getPage());
-        return pageResult;
-    }
-
-    public String saveCategory(GoodsCategory goodsCategory) {
-        GoodsCategory temp = goodsCategoryMapper.selectByLevelAndName(goodsCategory.getCategoryLevel(), goodsCategory.getCategoryName());
-        if (temp != null) {
-            return ServiceResultEnum.SAME_CATEGORY_EXIST.getResult();
-        }
-        if (goodsCategoryMapper.insertSelective(goodsCategory) > 0) {
-            return ServiceResultEnum.SUCCESS.getResult();
-        }
-        return ServiceResultEnum.DB_ERROR.getResult();
-    }
-
-    public String updateGoodsCategory(GoodsCategory goodsCategory) {
-        GoodsCategory temp = goodsCategoryMapper.selectByPrimaryKey(goodsCategory.getCategoryId());
-        if (temp == null) {
-            return ServiceResultEnum.DATA_NOT_EXIST.getResult();
-        }
-        GoodsCategory temp2 = goodsCategoryMapper.selectByLevelAndName(goodsCategory.getCategoryLevel(), goodsCategory.getCategoryName());
-        if (temp2 != null && !temp2.getCategoryId().equals(goodsCategory.getCategoryId())) {
-            //同名且不同id 不能继续修改
-            return ServiceResultEnum.SAME_CATEGORY_EXIST.getResult();
-        }
-        goodsCategory.setUpdateTime(new Date());
-        if (goodsCategoryMapper.updateByPrimaryKeySelective(goodsCategory) > 0) {
-            return ServiceResultEnum.SUCCESS.getResult();
-        }
-        return ServiceResultEnum.DB_ERROR.getResult();
-    }
-
-    public GoodsCategory getGoodsCategoryById(Long id) {
-        return goodsCategoryMapper.selectByPrimaryKey(id);
-    }
-
-    public Boolean deleteBatch(Integer[] ids) {
-        if (ids.length < 1) {
-            return false;
-        }
-        //删除分类数据
-        return goodsCategoryMapper.deleteBatch(ids) > 0;
-    }
-
+    /**
+     * 首页商品目录展示
+     * @return
+     */
     public List<NewBeeMallIndexCategoryVO> getCategoriesForIndex() {
         List<NewBeeMallIndexCategoryVO> newBeeMallIndexCategoryVOS = new ArrayList<>();
         //获取一级分类的固定数量的数据
@@ -126,6 +86,11 @@ public class NewBeeMallCategoryService{
         }
     }
 
+    /**
+     * 商品目录
+     * @param categoryId
+     * @return
+     */
     public SearchPageCategoryVO getCategoriesForSearch(Long categoryId) {
         SearchPageCategoryVO searchPageCategoryVO = new SearchPageCategoryVO();
         GoodsCategory thirdLevelGoodsCategory = goodsCategoryMapper.selectByPrimaryKey(categoryId);
@@ -144,7 +109,4 @@ public class NewBeeMallCategoryService{
         return null;
     }
 
-    public List<GoodsCategory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, int categoryLevel) {
-        return goodsCategoryMapper.selectByLevelAndParentIdsAndNumber(parentIds, categoryLevel, 0);//0代表查询所有
-    }
 }

@@ -16,6 +16,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 @Controller
 public class IndexController {
 
@@ -43,11 +46,16 @@ public class IndexController {
         List<NewBeeMallIndexConfigGoodsVO> hotGoods = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> newGoods = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_GOODS_NEW_NUMBER);
         List<NewBeeMallIndexConfigGoodsVO> recommendGoods = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
-        request.setAttribute("categories", categories);//分类数据
-        request.setAttribute("carousels", carousels);//轮播图
-        request.setAttribute("hotGoodses", hotGoods);//热销商品
-        request.setAttribute("newGoodses", newGoods);//新品
-        request.setAttribute("recommendGoodses", recommendGoods);//推荐商品
+        //分类数据
+        request.setAttribute("categories", categories);
+        //轮播图
+        request.setAttribute("carousels", carousels);
+        //热销商品
+        request.setAttribute("hotGoodses", hotGoods);
+        //新品
+        request.setAttribute("newGoodses", newGoods);
+        //推荐商品
+        request.setAttribute("recommendGoodses", recommendGoods);
         return "mall/index";
     }
 }

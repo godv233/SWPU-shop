@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 商城用户相关
+ * 商城用户相关控制器
  * @author GODV
  */
 @Controller
