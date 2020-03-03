@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author GODV
+ */
 @Service
 public class NewBeeMallIndexConfigService{
 
@@ -26,6 +29,11 @@ public class NewBeeMallIndexConfigService{
     @Autowired
     private NewBeeMallGoodsMapper goodsMapper;
 
+    /**
+     * 分页查询
+     * @param pageUtil
+     * @return
+     */
     public PageResult getConfigsPage(PageQueryUtil pageUtil) {
         List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigList(pageUtil);
         int total = indexConfigMapper.getTotalIndexConfigs(pageUtil);
@@ -33,6 +41,11 @@ public class NewBeeMallIndexConfigService{
         return pageResult;
     }
 
+    /**
+     * 保存
+     * @param indexConfig
+     * @return
+     */
     public String saveIndexConfig(IndexConfig indexConfig) {
         //todo 判断是否存在该商品
         if (indexConfigMapper.insertSelective(indexConfig) > 0) {
@@ -41,6 +54,11 @@ public class NewBeeMallIndexConfigService{
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     * 更新
+     * @param indexConfig
+     * @return
+     */
     public String updateIndexConfig(IndexConfig indexConfig) {
         //todo 判断是否存在该商品
         IndexConfig temp = indexConfigMapper.selectByPrimaryKey(indexConfig.getConfigId());
@@ -53,34 +71,9 @@ public class NewBeeMallIndexConfigService{
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
-    public IndexConfig getIndexConfigById(Long id) {
-        return null;
-    }
-
-    public List<NewBeeMallIndexConfigGoodsVO> getConfigGoodsesForIndex(int configType, int number) {
-        List<NewBeeMallIndexConfigGoodsVO> newBeeMallIndexConfigGoodsVOS = new ArrayList<>(number);
-        List<IndexConfig> indexConfigs = indexConfigMapper.findIndexConfigsByTypeAndNum(configType, number);
-        if (!CollectionUtils.isEmpty(indexConfigs)) {
-            //取出所有的goodsId
-            List<Long> goodsIds = indexConfigs.stream().map(IndexConfig::getGoodsId).collect(Collectors.toList());
-            List<NewBeeMallGoods> newBeeMallGoods = goodsMapper.selectByPrimaryKeys(goodsIds);
-            newBeeMallIndexConfigGoodsVOS = BeanUtil.copyList(newBeeMallGoods, NewBeeMallIndexConfigGoodsVO.class);
-            for (NewBeeMallIndexConfigGoodsVO newBeeMallIndexConfigGoodsVO : newBeeMallIndexConfigGoodsVOS) {
-                String goodsName = newBeeMallIndexConfigGoodsVO.getGoodsName();
-                String goodsIntro = newBeeMallIndexConfigGoodsVO.getGoodsIntro();
-                // 字符串过长导致文字超出的问题
-                if (goodsName.length() > 30) {
-                    goodsName = goodsName.substring(0, 30) + "...";
-                    newBeeMallIndexConfigGoodsVO.setGoodsName(goodsName);
-                }
-                if (goodsIntro.length() > 22) {
-                    goodsIntro = goodsIntro.substring(0, 22) + "...";
-                    newBeeMallIndexConfigGoodsVO.setGoodsIntro(goodsIntro);
-                }
-            }
-        }
-        return newBeeMallIndexConfigGoodsVOS;
-    }
+//    public IndexConfig getIndexConfigById(Long id) {
+//        return null;
+//    }
 
     public Boolean deleteBatch(Long[] ids) {
         if (ids.length < 1) {

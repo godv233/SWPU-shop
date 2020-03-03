@@ -29,7 +29,7 @@ public class NewBeeMallGoodsIndexConfigController {
     private NewBeeMallIndexConfigService newBeeMallIndexConfigService;
 
     /**
-     * 首页的商品展示，包括热销，新品，推荐。
+     * 商品展示，包括热销，新品，推荐。
      * @param request
      * @param configType
      * @return
@@ -97,19 +97,6 @@ public class NewBeeMallGoodsIndexConfigController {
         } else {
             return ResultGenerator.genFailResult(result);
         }
-    }
-
-    /**
-     * 详情
-     */
-    @GetMapping("/indexConfigs/info/{id}")
-    @ResponseBody
-    public Result info(@PathVariable("id") Long id) {
-        IndexConfig config = newBeeMallIndexConfigService.getIndexConfigById(id);
-        if (config == null) {
-            return ResultGenerator.genFailResult("未查询到数据");
-        }
-        return ResultGenerator.genSuccessResult(config);
     }
 
     /**

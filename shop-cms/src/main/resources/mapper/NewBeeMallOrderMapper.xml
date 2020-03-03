@@ -73,7 +73,6 @@
             limit #{start},#{limit}
         </if>
     </select>
-
     <select id="getTotalNewBeeMallOrders" parameterType="Map" resultType="int">
         select count(*) from tb_newbee_mall_order
         <where>
@@ -100,10 +99,6 @@
             </if>
         </where>
     </select>
-    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_order set is_deleted=1
-    where order_id = #{orderId,jdbcType=BIGINT} and is_deleted=0
-  </update>
     <update id="checkDone">
         update tb_newbee_mall_order
         set order_status = 2,update_time = now()

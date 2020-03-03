@@ -88,7 +88,7 @@ public class NewBeeMallGoodsCategoryController {
     }
 
     /**
-     * 添加
+     * 添加目录
      */
     @RequestMapping(value = "/categories/save", method = RequestMethod.POST)
     @ResponseBody

@@ -24,6 +24,11 @@ public class NewBeeMallGoodsService{
     @Autowired
     private NewBeeMallGoodsMapper goodsMapper;
 
+    /**
+     * 分页查询列表
+     * @param pageUtil
+     * @return
+     */
     public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
         List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
         int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
@@ -31,7 +36,11 @@ public class NewBeeMallGoodsService{
         return pageResult;
     }
 
-
+    /**
+     * 保存
+     * @param goods
+     * @return
+     */
     public String saveNewBeeMallGoods(NewBeeMallGoods goods) {
         if (goodsMapper.insertSelective(goods) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
@@ -39,13 +48,11 @@ public class NewBeeMallGoodsService{
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
-
-    public void batchSaveNewBeeMallGoods(List<NewBeeMallGoods> newBeeMallGoodsList) {
-        if (!CollectionUtils.isEmpty(newBeeMallGoodsList)) {
-            goodsMapper.batchInsert(newBeeMallGoodsList);
-        }
-    }
-
+    /**
+     * 更新
+     * @param goods
+     * @return
+     */
     public String updateNewBeeMallGoods(NewBeeMallGoods goods) {
         NewBeeMallGoods temp = goodsMapper.selectByPrimaryKey(goods.getGoodsId());
         if (temp == null) {
@@ -58,12 +65,21 @@ public class NewBeeMallGoodsService{
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
-
+    /**
+     * 查询
+     * @param id
+     * @return
+     */
     public NewBeeMallGoods getNewBeeMallGoodsById(Long id) {
         return goodsMapper.selectByPrimaryKey(id);
     }
-    
 
+    /**
+     * 批量更新商品状态
+     * @param ids
+     * @param sellStatus
+     * @return
+     */
     public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
         return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
     }

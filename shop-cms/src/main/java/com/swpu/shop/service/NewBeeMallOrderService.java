@@ -31,8 +31,6 @@ public class NewBeeMallOrderService {
     private NewBeeMallOrderMapper newBeeMallOrderMapper;
     @Autowired
     private NewBeeMallOrderItemMapper newBeeMallOrderItemMapper;
-    @Autowired
-    private NewBeeMallGoodsMapper newBeeMallGoodsMapper;
 
     /**
      * 订单列表
@@ -189,39 +187,6 @@ public class NewBeeMallOrderService {
         return ServiceResultEnum.DATA_NOT_EXIST.getResult();
     }
 
-    /**
-     * 通过订单号得到订单详情
-     * @param orderNo
-     * @param userId
-     * @return
-     */
-    public NewBeeMallOrderDetailVO getOrderDetailByOrderNo(String orderNo, Long userId) {
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
-        if (newBeeMallOrder != null) {
-            //todo 验证是否是当前userId下的订单，否则报错
-            List<NewBeeMallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(newBeeMallOrder.getOrderId());
-            //获取订单项数据
-            if (!CollectionUtils.isEmpty(orderItems)) {
-                List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS = BeanUtil.copyList(orderItems, NewBeeMallOrderItemVO.class);
-                NewBeeMallOrderDetailVO newBeeMallOrderDetailVO = new NewBeeMallOrderDetailVO();
-                BeanUtil.copyProperties(newBeeMallOrder, newBeeMallOrderDetailVO);
-                newBeeMallOrderDetailVO.setOrderStatusString(NewBeeMallOrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(newBeeMallOrderDetailVO.getOrderStatus()).getName());
-                newBeeMallOrderDetailVO.setPayTypeString(PayTypeEnum.getPayTypeEnumByType(newBeeMallOrderDetailVO.getPayType()).getName());
-                newBeeMallOrderDetailVO.setNewBeeMallOrderItemVOS(newBeeMallOrderItemVOS);
-                return newBeeMallOrderDetailVO;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * 通过订单号得到订单
-     * @param orderNo
-     * @return
-     */
-    public NewBeeMallOrder getNewBeeMallOrderByOrderNo(String orderNo) {
-        return newBeeMallOrderMapper.selectByOrderNo(orderNo);
-    }
     /**
      * 订单列表
      * @param id

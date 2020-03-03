@@ -6,12 +6,10 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 public interface NewBeeMallOrderMapper {
-    int deleteByPrimaryKey(Long orderId);
-
-    int insert(NewBeeMallOrder record);
-
-    int insertSelective(NewBeeMallOrder record);
 
     /**
      * id得到订单
@@ -20,12 +18,6 @@ public interface NewBeeMallOrderMapper {
      */
     NewBeeMallOrder selectByPrimaryKey(Long orderId);
 
-    /**
-     * 订单号得到订单
-     * @param orderNo
-     * @return
-     */
-    NewBeeMallOrder selectByOrderNo(String orderNo);
 
     /**
      * 更新订单

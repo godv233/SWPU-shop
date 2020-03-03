@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
+/**
+ * @author GODV
+ */
 @Service
 public class NewBeeMallUserService {
 

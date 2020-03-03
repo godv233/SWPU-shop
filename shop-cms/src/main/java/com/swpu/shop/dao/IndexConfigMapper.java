@@ -19,11 +19,20 @@ public interface IndexConfigMapper {
 
     int updateByPrimaryKey(IndexConfig record);
 
+    /**
+     * 查询列表
+     * @param pageUtil
+     * @return
+     */
     List<IndexConfig> findIndexConfigList(PageQueryUtil pageUtil);
 
+    /**
+     * 总数
+     * @param pageUtil
+     * @return
+     */
     int getTotalIndexConfigs(PageQueryUtil pageUtil);
 
     int deleteBatch(Long[] ids);
 
-    List<IndexConfig> findIndexConfigsByTypeAndNum(@Param("configType") int configType, @Param("number") int number);
 }
