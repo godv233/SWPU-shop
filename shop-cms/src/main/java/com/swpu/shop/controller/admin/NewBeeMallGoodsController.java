@@ -122,7 +122,7 @@ public class NewBeeMallGoodsController {
     }
 
     /**
-     * 列表
+     * 商品列表
      */
     @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
     @ResponseBody

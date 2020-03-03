@@ -16,11 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Objects;
 
+
 /**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
+ * 首页展示的商品
+ * @author GODV
  */
 @Controller
 @RequestMapping("/admin")
@@ -29,6 +28,12 @@ public class NewBeeMallGoodsIndexConfigController {
     @Resource
     private NewBeeMallIndexConfigService newBeeMallIndexConfigService;
 
+    /**
+     * 首页的商品展示，包括热销，新品，推荐。
+     * @param request
+     * @param configType
+     * @return
+     */
     @GetMapping("/indexConfigs")
     public String indexConfigsPage(HttpServletRequest request, @RequestParam("configType") int configType) {
         IndexConfigTypeEnum indexConfigTypeEnum = IndexConfigTypeEnum.getIndexConfigTypeEnumByType(configType);

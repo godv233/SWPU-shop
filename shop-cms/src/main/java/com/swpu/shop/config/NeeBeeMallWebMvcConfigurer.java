@@ -1,7 +1,6 @@
 package com.swpu.shop.config;
 
 import com.swpu.shop.interceptor.AdminLoginInterceptor;
-import com.swpu.shop.interceptor.NewBeeMallLoginInterceptor;
 import com.swpu.shop.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

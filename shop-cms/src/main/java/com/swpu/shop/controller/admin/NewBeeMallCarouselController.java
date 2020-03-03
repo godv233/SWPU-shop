@@ -28,6 +28,11 @@ public class NewBeeMallCarouselController {
     @Resource
     NewBeeMallCarouselService newBeeMallCarouselService;
 
+    /**
+     * 跳转页面
+     * @param request
+     * @return
+     */
     @GetMapping("/carousels")
     public String carouselPage(HttpServletRequest request) {
         request.setAttribute("path", "newbee_mall_carousel");
@@ -35,7 +40,7 @@ public class NewBeeMallCarouselController {
     }
 
     /**
-     * 列表
+     * 轮播图列表
      */
     @RequestMapping(value = "/carousels/list", method = RequestMethod.GET)
     @ResponseBody
@@ -48,7 +53,7 @@ public class NewBeeMallCarouselController {
     }
 
     /**
-     * 添加
+     * 添加轮播图
      */
     @RequestMapping(value = "/carousels/save", method = RequestMethod.POST)
     @ResponseBody
@@ -67,7 +72,7 @@ public class NewBeeMallCarouselController {
 
 
     /**
-     * 修改
+     * 修改轮播图
      */
     @RequestMapping(value = "/carousels/update", method = RequestMethod.POST)
     @ResponseBody
@@ -86,7 +91,7 @@ public class NewBeeMallCarouselController {
     }
 
     /**
-     * 详情
+     * 轮播图详情 哈哈
      */
     @GetMapping("/carousels/info/{id}")
     @ResponseBody
@@ -99,7 +104,7 @@ public class NewBeeMallCarouselController {
     }
 
     /**
-     * 删除
+     * 删除轮播图
      */
     @RequestMapping(value = "/carousels/delete", method = RequestMethod.POST)
     @ResponseBody

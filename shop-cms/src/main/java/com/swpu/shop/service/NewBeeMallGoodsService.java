@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 @Service
 public class NewBeeMallGoodsService{
 
