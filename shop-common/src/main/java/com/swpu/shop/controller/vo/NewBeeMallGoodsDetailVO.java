@@ -3,9 +3,9 @@ package com.swpu.shop.controller.vo;
 import java.io.Serializable;
 
 /**
- * 搜索列表页商品VO
+ * 商品详情页VO
  */
-public class NewBeeMallSearchGoodsVO implements Serializable {
+public class NewBeeMallGoodsDetailVO implements Serializable {
 
     private Long goodsId;
 
@@ -15,7 +15,13 @@ public class NewBeeMallSearchGoodsVO implements Serializable {
 
     private String goodsCoverImg;
 
+    private String[] goodsCarouselList;
+
     private Integer sellingPrice;
+
+    private Integer originalPrice;
+
+    private String goodsDetailContent;
 
     public Long getGoodsId() {
         return goodsId;
@@ -55,5 +61,29 @@ public class NewBeeMallSearchGoodsVO implements Serializable {
 
     public void setSellingPrice(Integer sellingPrice) {
         this.sellingPrice = sellingPrice;
+    }
+
+    public Integer getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Integer originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public String getGoodsDetailContent() {
+        return goodsDetailContent;
+    }
+
+    public void setGoodsDetailContent(String goodsDetailContent) {
+        this.goodsDetailContent = goodsDetailContent;
+    }
+
+    public String[] getGoodsCarouselList() {
+        return goodsCarouselList;
+    }
+
+    public void setGoodsCarouselList(String[] goodsCarouselList) {
+        this.goodsCarouselList = goodsCarouselList;
     }
 }
