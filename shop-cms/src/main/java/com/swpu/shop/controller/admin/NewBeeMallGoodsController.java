@@ -189,19 +189,6 @@ public class NewBeeMallGoodsController {
     }
 
     /**
-     * 详情
-     */
-    @GetMapping("/goods/info/{id}")
-    @ResponseBody
-    public Result info(@PathVariable("id") Long id) {
-        NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(id);
-        if (goods == null) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
-        }
-        return ResultGenerator.genSuccessResult(goods);
-    }
-
-    /**
      * 批量修改销售状态
      */
     @RequestMapping(value = "/goods/status/{sellStatus}", method = RequestMethod.PUT)

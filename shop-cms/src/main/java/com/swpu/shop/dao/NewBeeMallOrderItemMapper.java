@@ -6,13 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface NewBeeMallOrderItemMapper {
-    int deleteByPrimaryKey(Long orderItemId);
-
-    int insert(NewBeeMallOrderItem record);
-
-    int insertSelective(NewBeeMallOrderItem record);
-
-    NewBeeMallOrderItem selectByPrimaryKey(Long orderItemId);
 
     /**
      * 根据订单id获取订单项列表
