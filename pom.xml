@@ -14,17 +14,29 @@
     <packaging>pom</packaging>
     <name>swpu-shop</name>
     <description>SWPU-SHOP</description>
-<!--    三个模块-->
+<!--    四个模块-->
     <modules>
         <module>shop-flash</module>
         <module>shop-cms</module>
         <module>shop-index</module>
+        <module>shop-common</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
+        <!-- 验证码 -->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
@@ -50,7 +62,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+<!--            <scope>runtime</scope>-->
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

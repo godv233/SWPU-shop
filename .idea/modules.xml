@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/shop-cms/shop-cms.iml" filepath="$PROJECT_DIR$/shop-cms/shop-cms.iml" />
       <module fileurl="file://$PROJECT_DIR$/shop-flash/shop-flash.iml" filepath="$PROJECT_DIR$/shop-flash/shop-flash.iml" />
       <module fileurl="file://$PROJECT_DIR$/shop-index/shop-index.iml" filepath="$PROJECT_DIR$/shop-index/shop-index.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-common/shopcommon.iml" filepath="$PROJECT_DIR$/shop-common/shopcommon.iml" />
     </modules>
   </component>
 </project>
