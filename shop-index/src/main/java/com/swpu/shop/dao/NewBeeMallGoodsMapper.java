@@ -7,35 +7,45 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 public interface NewBeeMallGoodsMapper {
-    int deleteByPrimaryKey(Long goodsId);
-
-    int insert(NewBeeMallGoods record);
-
-    int insertSelective(NewBeeMallGoods record);
-
-    NewBeeMallGoods selectByPrimaryKey(Long goodsId);
-
-    int updateByPrimaryKeySelective(NewBeeMallGoods record);
-
-    int updateByPrimaryKeyWithBLOBs(NewBeeMallGoods record);
-
-    int updateByPrimaryKey(NewBeeMallGoods record);
-
-    List<NewBeeMallGoods> findNewBeeMallGoodsList(PageQueryUtil pageUtil);
-
-    int getTotalNewBeeMallGoods(PageQueryUtil pageUtil);
-
+    /**
+     * ids查找
+     * @param goodsIds
+     * @return
+     */
     List<NewBeeMallGoods> selectByPrimaryKeys(List<Long> goodsIds);
 
-    List<NewBeeMallGoods> findNewBeeMallGoodsListBySearch(PageQueryUtil pageUtil);
-
-    int getTotalNewBeeMallGoodsBySearch(PageQueryUtil pageUtil);
-
-    int batchInsert(@Param("newBeeMallGoodsList") List<NewBeeMallGoods> newBeeMallGoodsList);
-
+    /**
+     * 更新
+     * @param stockNumDTOS
+     * @return
+     */
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 
-    int batchUpdateSellStatus(@Param("orderIds") Long[] orderIds, @Param("sellStatus") int sellStatus);
+    /**
+     * 查找
+     * @param goodsId
+     * @return
+     */
+    NewBeeMallGoods selectByPrimaryKey(Long goodsId);
+
+    /**
+     * 搜索查找
+     * @param pageUtil
+     * @return
+     */
+    List<NewBeeMallGoods> findNewBeeMallGoodsListBySearch(PageQueryUtil pageUtil);
+
+    /**
+     * 得到搜索的总数
+     * @param pageUtil
+     * @return
+     */
+    int getTotalNewBeeMallGoodsBySearch(PageQueryUtil pageUtil);
+
+
 
 }

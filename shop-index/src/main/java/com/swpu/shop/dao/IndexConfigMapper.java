@@ -6,24 +6,16 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 public interface IndexConfigMapper {
-    int deleteByPrimaryKey(Long configId);
-
-    int insert(IndexConfig record);
-
-    int insertSelective(IndexConfig record);
-
-    IndexConfig selectByPrimaryKey(Long configId);
-
-    int updateByPrimaryKeySelective(IndexConfig record);
-
-    int updateByPrimaryKey(IndexConfig record);
-
-    List<IndexConfig> findIndexConfigList(PageQueryUtil pageUtil);
-
-    int getTotalIndexConfigs(PageQueryUtil pageUtil);
-
-    int deleteBatch(Long[] ids);
-
+    /**
+     * 根据类型找到IndexConfig首页数据
+     * @param configType
+     * @param number
+     * @return
+     */
     List<IndexConfig> findIndexConfigsByTypeAndNum(@Param("configType") int configType, @Param("number") int number);
+
 }

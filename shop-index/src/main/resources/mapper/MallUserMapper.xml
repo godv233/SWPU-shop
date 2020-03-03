@@ -17,28 +17,6 @@
     locked_flag, create_time
   </sql>
 
-    <select id="findMallUserList" parameterType="Map" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user
-        where 1=1
-        <if test="loginName!=null and loginName!=''">
-            and login_name = #{loginName}
-        </if>
-        order by create_time desc
-        <if test="start!=null and limit!=null">
-            limit #{start},#{limit}
-        </if>
-    </select>
-
-    <select id="getTotalMallUsers" parameterType="Map" resultType="int">
-        select count(*) from tb_newbee_mall_user
-        where 1=1
-        <if test="loginName!=null and loginName!=''">
-            and login_name = #{loginName}
-        </if>
-    </select>
-
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -57,20 +35,6 @@
         from tb_newbee_mall_user
         where login_name = #{loginName} and password_md5 = #{password} and is_deleted = 0
     </select>
-    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_user set is_deleted = 1
-    where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
-  </update>
-    <insert id="insert" parameterType="com.swpu.shop.entity.MallUser">
-    insert into tb_newbee_mall_user (user_id, nick_name, login_name, 
-      password_md5, introduce_sign, address, 
-      is_deleted, locked_flag, create_time
-      )
-    values (#{userId,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, 
-      #{passwordMd5,jdbcType=VARCHAR}, #{introduceSign,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{isDeleted,jdbcType=TINYINT}, #{lockedFlag,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
     <insert id="insertSelective" parameterType="com.swpu.shop.entity.MallUser">
         insert into tb_newbee_mall_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -161,24 +125,5 @@
             </if>
         </set>
         where user_id = #{userId,jdbcType=BIGINT}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.swpu.shop.entity.MallUser">
-    update tb_newbee_mall_user
-    set nick_name = #{nickName,jdbcType=VARCHAR},
-      login_name = #{loginName,jdbcType=VARCHAR},
-      password_md5 = #{passwordMd5,jdbcType=VARCHAR},
-      introduce_sign = #{introduceSign,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=TINYINT},
-      locked_flag = #{lockedFlag,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where user_id = #{userId,jdbcType=BIGINT}
-  </update>
-    <update id="lockUserBatch">
-        update tb_newbee_mall_user
-        set locked_flag=#{lockStatus} where user_id in
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
     </update>
 </mapper>

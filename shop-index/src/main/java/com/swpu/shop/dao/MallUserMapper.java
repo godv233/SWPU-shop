@@ -6,26 +6,44 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 public interface MallUserMapper {
-    int deleteByPrimaryKey(Long userId);
-
-    int insert(MallUser record);
-
-    int insertSelective(MallUser record);
-
-    MallUser selectByPrimaryKey(Long userId);
-
-    MallUser selectByLoginName(String loginName);
-
+    /**
+     * 查找账号和密码
+     * @param loginName
+     * @param password
+     * @return
+     */
     MallUser selectByLoginNameAndPasswd(@Param("loginName") String loginName, @Param("password") String password);
 
+    /**
+     * 根据name找user
+     * @param loginName
+     * @return
+     */
+    MallUser selectByLoginName(String loginName);
+
+    /**
+     * 插入
+     * @param record
+     * @return
+     */
+    int insertSelective(MallUser record);
+
+    /**
+     * 根据id找user
+     * @param userId
+     * @return
+     */
+    MallUser selectByPrimaryKey(Long userId);
+
+    /**
+     * 更新
+     * @param record
+     * @return
+     */
     int updateByPrimaryKeySelective(MallUser record);
 
-    int updateByPrimaryKey(MallUser record);
-
-    List<MallUser> findMallUserList(PageQueryUtil pageUtil);
-
-    int getTotalMallUsers(PageQueryUtil pageUtil);
-
-    int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
 }

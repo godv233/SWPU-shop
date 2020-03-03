@@ -6,26 +6,25 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 public interface GoodsCategoryMapper {
-    int deleteByPrimaryKey(Long categoryId);
+    /**
+     *获得层级目录
+     * @param parentIds
+     * @param categoryLevel
+     * @param number
+     * @return
+     */
+    List<GoodsCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Long> parentIds,
+                                                           @Param("categoryLevel") int categoryLevel,
+                                                              @Param("number") int number);
 
-    int insert(GoodsCategory record);
-
-    int insertSelective(GoodsCategory record);
-
+    /**
+     * categoryId得到目录
+     * @param categoryId
+     * @return
+     */
     GoodsCategory selectByPrimaryKey(Long categoryId);
-
-    GoodsCategory selectByLevelAndName(@Param("categoryLevel") Byte categoryLevel, @Param("categoryName") String categoryName);
-
-    int updateByPrimaryKeySelective(GoodsCategory record);
-
-    int updateByPrimaryKey(GoodsCategory record);
-
-    List<GoodsCategory> findGoodsCategoryList(PageQueryUtil pageUtil);
-
-    int getTotalGoodsCategories(PageQueryUtil pageUtil);
-
-    int deleteBatch(Integer[] ids);
-
-    List<GoodsCategory> selectByLevelAndParentIdsAndNumber(@Param("parentIds") List<Long> parentIds, @Param("categoryLevel") int categoryLevel, @Param("number") int number);
 }

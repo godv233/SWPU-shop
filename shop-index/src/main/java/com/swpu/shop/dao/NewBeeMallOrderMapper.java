@@ -6,30 +6,53 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 public interface NewBeeMallOrderMapper {
-    int deleteByPrimaryKey(Long orderId);
-
-    int insert(NewBeeMallOrder record);
-
-    int insertSelective(NewBeeMallOrder record);
-
-    NewBeeMallOrder selectByPrimaryKey(Long orderId);
-
+    /**
+     * 查找订单
+     * @param orderNo
+     * @return
+     */
     NewBeeMallOrder selectByOrderNo(String orderNo);
 
-    int updateByPrimaryKeySelective(NewBeeMallOrder record);
-
-    int updateByPrimaryKey(NewBeeMallOrder record);
-
-    List<NewBeeMallOrder> findNewBeeMallOrderList(PageQueryUtil pageUtil);
-
+    /**
+     * 总数
+     * @param pageUtil
+     * @return
+     */
     int getTotalNewBeeMallOrders(PageQueryUtil pageUtil);
 
-    List<NewBeeMallOrder> selectByPrimaryKeys(@Param("orderIds") List<Long> orderIds);
+    /**
+     * 列表
+     * @param pageUtil
+     * @return
+     */
+    List<NewBeeMallOrder> findNewBeeMallOrderList(PageQueryUtil pageUtil);
 
-    int checkOut(@Param("orderIds") List<Long> orderIds);
+    /**
+     * 插入
+     * @param record
+     * @return
+     */
+    int insertSelective(NewBeeMallOrder record);
 
+    /**
+     * 关闭订单
+     * @param orderIds
+     * @param orderStatus
+     * @return
+     */
     int closeOrder(@Param("orderIds") List<Long> orderIds, @Param("orderStatus") int orderStatus);
 
-    int checkDone(@Param("orderIds") List<Long> asList);
+    /**
+     * 更新
+     * @param record
+     * @return
+     */
+    int updateByPrimaryKeySelective(NewBeeMallOrder record);
+
+
+
 }
