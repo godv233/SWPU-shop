@@ -1,8 +1,12 @@
 package com.swpu.shop.shopflash.controller;
 
+import com.swpu.shop.controller.vo.NewBeeMallGoodsDetailVO;
+import com.swpu.shop.entity.MallUser;
+import com.swpu.shop.shopflash.common.Result;
 import com.swpu.shop.shopflash.redis.GoodsKey;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.service.GoodsService;
+import com.swpu.shop.shopflash.vo.FlashGoodsDetailVo;
 import com.swpu.shop.shopflash.vo.FlashGoodsVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +39,6 @@ public class GoodsController {
 
     /**
      * 跳转商品列表，并携带商品数据
-     *
-     * @param model
-     * @param user
      * @return
      * 在5000*10的情况下
      * 未使用redis之前的qps是1200左右
@@ -47,7 +48,7 @@ public class GoodsController {
      */
     @RequestMapping(value = "/to_list", produces = "text/html")
     @ResponseBody
-    public String toLogin(HttpServletRequest request, HttpServletResponse response, Model model) {
+    public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model) {
         //从缓存中取
         String html = (String) redisService.get(GoodsKey.getGoodsList, "");
         if (!StringUtils.isEmpty(html)) {
@@ -64,5 +65,34 @@ public class GoodsController {
             redisService.set(GoodsKey.getGoodsList, "", html);
         }
         return html;
+    }
+
+    @RequestMapping(value="/detail/{goodsId}")
+    @ResponseBody
+    public Result<FlashGoodsDetailVo> detail(MallUser user, @PathVariable("goodsId")long goodsId) {
+        FlashGoodsVo goods = goodsService.goodsVoById(goodsId);
+        long startAt = goods.getStartDate().getTime();
+        long endAt = goods.getEndDate().getTime();
+        long now = System.currentTimeMillis();
+        int flashStatus = 0;
+        int remainSeconds = 0;
+        if(now < startAt ) {
+            //秒杀还没开始，倒计时
+            flashStatus = 0;
+            remainSeconds = (int)((startAt - now )/1000);
+        }else  if(now > endAt){
+            //秒杀已经结束
+            flashStatus = 2;
+            remainSeconds = -1;
+        }else {//秒杀进行中
+            flashStatus = 1;
+            remainSeconds = 0;
+        }
+        FlashGoodsDetailVo vo = new FlashGoodsDetailVo();
+        vo.setGoods(goods);
+        vo.setUser(user);
+        vo.setRemainSeconds(remainSeconds);
+        vo.setFlashStatus(flashStatus);
+        return Result.success(vo);
     }
 }

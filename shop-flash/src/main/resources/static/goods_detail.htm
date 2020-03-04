@@ -22,10 +22,10 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">秒杀商品详情</div>
-    <div class="panel-body">
-        <span id="userTip"> 您还没有登录，请登陆后再操作<br/></span>
-        <span>没有收货地址的提示。。。</span>
-    </div>
+<!--    <div class="panel-body">-->
+<!--        <span id="userTip"> 您还没有登录，请登陆后再操作<br/></span>-->
+<!--        <span>没有收货地址的提示。。。</span>-->
+<!--    </div>-->
     <table class="table" id="goodslist">
         <tr>
             <td>商品名称</td>
@@ -40,11 +40,11 @@
             <td id="startTime"></td>
             <td>
                 <input type="hidden" id="remainSeconds"/>
-                <span id="miaoshaTip"></span>
+                <span id="flashTip"></span>
             </td>
             <td>
                 <!--
-                    <form id="miaoshaForm" method="post" action="/miaosha/do_miaosha">
+                    <form id="flashForm" method="post" action="/flash/do_flash">
                         <button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀</button>
                         <input type="hidden" name="goodsId"  id="goodsId" />
                     </form>-->
@@ -53,7 +53,7 @@
                         <img id="verifyCodeImg" width="80" height="32" style="display:none"
                              onclick="refreshVerifyCode()"/>
                         <input id="verifyCode" class="form-control" style="display:none"/>
-                        <button class="btn btn-primary" type="button" id="buyButton" onclick="getMiaoshaPath()">立即秒杀
+                        <button class="btn btn-primary" type="button" id="buyButton" onclick="getFlashPath()">立即秒杀
                         </button>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
         </tr>
         <tr>
             <td>秒杀价</td>
-            <td colspan="3" id="miaoshaPrice"></td>
+            <td colspan="3" id="flashPrice"></td>
         </tr>
         <tr>
             <td>库存数量</td>
@@ -76,11 +76,11 @@
 </div>
 </body>
 <script>
-    function getMiaoshaPath() {
+    function getFlashPath() {
         var goodsId = g_getQueryString("goodsId");
         g_showLoading();
         $.ajax({
-            url: "/miaosha/path",
+            url: "/flash/path",
             type: "GET",
             data: {
                 goodsId: goodsId,
@@ -89,7 +89,7 @@
             success: function (data) {
                 if (data.code == 0) {
                     var path = data.data;
-                    doMiaosha(path);
+                    doFlash(path);
                 } else {
                     layer.msg(data.msg);
                 }
@@ -100,10 +100,10 @@
         });
     }
 
-    function getMiaoshaResult(goodsId) {
+    function getFlashResult(goodsId) {
         g_showLoading();
         $.ajax({
-            url: "/miaosha/result",
+            url: "/flash/result",
             type: "GET",
             data: {
                 goodsId: goodsId,
@@ -116,7 +116,7 @@
                     } else if (result == 0) {//继续轮询
                         setTimeout(function () {
                             console.log("123");
-                            getMiaoshaResult(goodsId);
+                            getFlashResult(goodsId);
                         }, 200);
                     } else {
                         layer.confirm("恭喜你，秒杀成功！查看订单？", {btn: ["确定", "取消"]},
@@ -137,10 +137,10 @@
         });
     }
 
-    function doMiaosha(path) {
+    function doFlash(path) {
         var goodsId = g_getQueryString("goodsId");
         $.ajax({
-            url: "/miaosha/" + path + "/do_miaosha",
+            url: "/flash/" + path + "/do_flash",
             type: "POST",
             data: {
                 goodsId: goodsId
@@ -148,7 +148,7 @@
             success: function (data) {
                 if (data.code == 0) {
                     // window.location.href="/order_detail.htm?orderId="+data.data.id;
-                    getMiaoshaResult(goodsId);
+                    getFlashResult(goodsId);
                 } else {
                     layer.msg(data.msg);
                 }
@@ -161,7 +161,7 @@
     }
 
     function render(detail) {
-        var miaoshaStatus = detail.miaoshaStatus;
+        var flashStatus = detail.flashStatus;
         var remainSeconds = detail.remainSeconds;
         var goods = detail.goods;
         var user = detail.user;
@@ -169,12 +169,12 @@
             $("#userTip").hide();
         }
         $("#goodsName").text(goods.goodsName);
-        $("#goodsImg").attr("src", goods.goodsImg);
+        $("#goodsImg").attr("src", goods.goodsCoverImg);
         $("#startTime").text(new Date(goods.startDate).format("yyyy-MM-dd hh:mm:ss"));
         $("#remainSeconds").val(remainSeconds);
-        $("#goodsId").val(goods.id);
+        $("#goodsId").val(goods.goodsId);
         $("#goodsPrice").text(goods.goodsPrice);
-        $("#miaoshaPrice").text(goods.miaoshaPrice);
+        $("#flashPrice").text(goods.flashPrice);
         $("#stockCount").text(goods.stockCount);
         countDown();
     }
@@ -207,7 +207,7 @@
         var timeout;
         if(remainSeconds > 0){//秒杀还没开始，倒计时
             $("#buyButton").attr("disabled", true);
-            $("#miaoshaTip").html("秒杀倒计时："+remainSeconds+"秒");
+            $("#flashTip").html("秒杀倒计时："+remainSeconds+"秒");
             timeout = setTimeout(function(){
                 $("#countDown").text(remainSeconds - 1);
                 $("#remainSeconds").val(remainSeconds - 1);
@@ -218,19 +218,19 @@
             if(timeout){
                 clearTimeout(timeout);
             }
-            $("#miaoshaTip").html("秒杀进行中");
-            $("#verifyCodeImg").attr("src", "/miaosha/verifyCode?goodsId="+$("#goodsId").val());
+            $("#flashTip").html("秒杀进行中");
+            $("#verifyCodeImg").attr("src", "/flash/verifyCode?goodsId="+$("#goodsId").val());
             $("#verifyCodeImg").show();
             $("#verifyCode").show();
         }else{//秒杀已经结束
             $("#buyButton").attr("disabled", true);
-            $("#miaoshaTip").html("秒杀已经结束");
+            $("#flashTip").html("秒杀已经结束");
             $("#verifyCodeImg").hide();
             $("#verifyCode").hide();
         }
     }
     function refreshVerifyCode(){
-        $("#verifyCodeImg").attr("src", "/miaosha/verifyCode?goodsId="+$("#goodsId").val()+"&timestamp="+new Date().getTime());
+        $("#verifyCodeImg").attr("src", "/flash/verifyCode?goodsId="+$("#goodsId").val()+"&timestamp="+new Date().getTime());
     }
 </script>
 </html>

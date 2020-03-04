@@ -32,7 +32,7 @@ public interface FlashGoodsDao {
      * @return
      */
     @Select("SELECT g.*, mg.stock_count,mg.start_date, mg.end_date, mg.flash_price FROM flash_goods mg " +
-            "LEFT JOIN tb_newbee_mall_goods_info g ON mg.goods_id = g.goods_id WHERE g.goods_id ==#{goodsId}")
+            "LEFT JOIN tb_newbee_mall_goods_info g ON mg.goods_id = g.goods_id WHERE g.goods_id =#{goodsId}")
     FlashGoodsVo getGoodsVoById(@Param("goodsId") long goodsId);
 
     /**

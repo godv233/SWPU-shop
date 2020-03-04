@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 商品详情页VO
+ * @author GODV
  */
 public class NewBeeMallGoodsDetailVO implements Serializable {
 

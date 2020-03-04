@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
+/**
+ * @author GODV
+ */
 public class NewBeeMallOrder {
     private Long orderId;
 
