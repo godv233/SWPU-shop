@@ -32,7 +32,6 @@ public class FlashLoginInterceptor implements HandlerInterceptor {
             response.sendRedirect("http://localhost:8080/login");
             return false;
         }else{
-            //threadLocal保存user
             UserContext.setUser(user);
             return true;
         }

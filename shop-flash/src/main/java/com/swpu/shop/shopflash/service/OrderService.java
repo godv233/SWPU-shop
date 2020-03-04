@@ -6,13 +6,12 @@ import com.swpu.shop.shopflash.mapper.OrderDao;
 import com.swpu.shop.shopflash.redis.OrderKey;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.vo.FlashGoodsVo;
+import com.swpu.shop.shopflash.vo.FlashOrderDetailVo;
 import com.swpu.shop.shopflash.vo.FlashSaleOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.callback.Callback;
-import java.util.Date;
 
 /**
  * 订单service
@@ -25,6 +24,8 @@ public class OrderService {
     private OrderDao orderDao;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private GoodsService goodsService;
     /**
      * 通过userid和goodsId得到订单
      * @param userId
@@ -64,20 +65,24 @@ public class OrderService {
         //秒杀订单
         FlashSaleOrder flashSaleOrder=new FlashSaleOrder();
         flashSaleOrder.setGoodsId(goodsVo.getGoodsId());
-        flashSaleOrder.setOrderId(orderInfo.getOrderId());
         flashSaleOrder.setUserId(user.getUserId());
         orderDao.flashOrder(flashSaleOrder);
         boolean set = redisService.set(OrderKey.getMiaoshaOrderByUidGid, "" + user.getUserId() + goodsVo.getGoodsId(), flashSaleOrder);
-        System.out.println(set);
         return orderInfo;
     }
 
-//    /**
-//     * 通过id得到订单详情
-//     * @param orderId
-//     * @return
-//     */
-//    public OrderInfo getOrderById(long orderId) {
-//        return orderDao.getOrderById(orderId);
-//    }
+    /**
+     * 得到订单
+     * @param orderId
+     * @return
+     */
+    public FlashOrderDetailVo getOrderDetailById(long orderId) {
+        FlashOrderDetailVo detailVo=new FlashOrderDetailVo();
+        FlashSaleOrder order = orderDao.getOrderByOrderId(orderId);
+        FlashGoodsVo goods= goodsService.goodsVoById(order.getGoodsId());
+        detailVo.setOrder(order);
+        detailVo.setGoods(goods);
+        return detailVo;
+
+    }
 }

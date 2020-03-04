@@ -5,6 +5,7 @@ import com.swpu.shop.entity.NewBeeMallOrder;
 import com.swpu.shop.shopflash.redis.MiaoshaKey;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.vo.FlashGoodsVo;
+import com.swpu.shop.shopflash.vo.FlashSaleOrder;
 import com.swpu.shop.util.UUIDUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,4 +177,34 @@ public class FlashSaleService {
     private void setGoodsOver(long goodsId) {
         redisService.set(MiaoshaKey.goodsOver, "" + goodsId, true);
     }
+
+    /**
+     * 查询秒杀的结果
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    public long getFlashResult(long userId, long goodsId) {
+        FlashSaleOrder flashSaleOrder = orderService.orderByUserIdGoodsId(userId, goodsId);
+        if (flashSaleOrder != null) {
+            //秒杀成功
+            return flashSaleOrder.getOrderId();
+        } else {
+            boolean over = getGoodsOver(goodsId);
+            if (over) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
+    /**
+     * 查询商品是否秒杀结束
+     * @param goodsId
+     * @return
+     */
+    private boolean getGoodsOver(long goodsId) {
+        return redisService.exists(MiaoshaKey.goodsOver, "" + goodsId);
+    }
+
 }

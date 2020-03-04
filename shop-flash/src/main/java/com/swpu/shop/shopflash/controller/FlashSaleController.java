@@ -11,6 +11,7 @@ import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.service.FlashSaleService;
 import com.swpu.shop.shopflash.service.GoodsService;
 import com.swpu.shop.shopflash.service.OrderService;
+import com.swpu.shop.shopflash.vo.FlashGoodsVo;
 import com.swpu.shop.shopflash.vo.FlashSaleOrder;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,17 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  * 秒杀的控制器
+ *
  * @author 曾伟
  * @date 2019/11/21 21:58
  */
 @Controller
 @RequestMapping("/flash")
-public class FlashSaleController implements InitializingBean {
+public class FlashSaleController{
     @Autowired
     private RedisService redisService;
     @Autowired
@@ -44,6 +47,7 @@ public class FlashSaleController implements InitializingBean {
 
     /**
      * 得到生成校验码：
+     *
      * @param response
      * @param user
      * @param goodsId
@@ -70,7 +74,6 @@ public class FlashSaleController implements InitializingBean {
     }
 
 
-
     /**
      * 得到path
      *
@@ -82,7 +85,7 @@ public class FlashSaleController implements InitializingBean {
     @GetMapping("/path")
     @ResponseBody
     public Result<String> getFlashPath(Model model, MallUser user, @RequestParam("goodsId") long goodsId,
-                                         @RequestParam(value="verifyCode", defaultValue="0")int verifyCode) {
+                                       @RequestParam(value = "verifyCode", defaultValue = "0") int verifyCode) {
         //测试时defaultValue.还需要修改
         model.addAttribute("user", user);
         if (user == null) {
@@ -90,8 +93,7 @@ public class FlashSaleController implements InitializingBean {
         }
         //查询接口访问的次数，实现限流防刷
         boolean check = flashSaleService.checkVerifyCode(user, goodsId, verifyCode);
-
-        if(!check) {
+        if (!check) {
             return Result.error(CodeMsg.REQUEST_ILLEGAL);
         }
         String str = flashSaleService.createPath(user.getUserId(), goodsId);
@@ -143,16 +145,26 @@ public class FlashSaleController implements InitializingBean {
 
 
 
-
-
-
-
     /**
-     * 预加载redis
-     * @throws Exception
+     * 查询秒杀结果：
+     * 成功：orderId
+     * 失败：-1
+     * 还在处理中：0
+     *
+     * @param model
+     * @param user
+     * @param goodsId
+     * @return
      */
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    @GetMapping("/result")
+    @ResponseBody
+    public Result<Long> flashResult(Model model, MallUser user, @RequestParam("goodsId") long goodsId) {
+        model.addAttribute("user", user);
+        if (user == null) {
+            return Result.error(CodeMsg.SESSION_ERROR);
+        }
+        long result = flashSaleService.getFlashResult(user.getUserId(), goodsId);
+        return Result.success(result);
 
     }
 }

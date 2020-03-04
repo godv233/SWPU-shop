@@ -9,6 +9,7 @@ import com.swpu.shop.redis.RedisService;
 import com.swpu.shop.redis.UserKey;
 import com.swpu.shop.util.BeanUtil;
 import com.swpu.shop.util.MD5Util;
+import com.swpu.shop.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
@@ -43,7 +44,7 @@ public class NewBeeMallUserService{
             }
 
             //将用户的信息存放在redis中,并且将token设置进cookie
-            String token = UUID.randomUUID().toString().replace("-", "");
+            String token = UUIDUtils.uuid();
             redisService.set(UserKey.token,token,user);
             Cookie cookie=new Cookie("token",token);
             cookie.setMaxAge(UserKey.token.expireSeconds());

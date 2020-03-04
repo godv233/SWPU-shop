@@ -34,6 +34,7 @@ public class CodeMsg {
     public static CodeMsg ORDER_NOT_EXIST = new CodeMsg(500400, "订单不存在");
 
     //秒杀模块 5005XX
+
     public static CodeMsg MIAO_SHA_OVER = new CodeMsg(500500, "商品已经秒杀完毕");
     public static CodeMsg REPEATE_MIAOSHA = new CodeMsg(500501, "不能重复秒杀");
     public static CodeMsg MIAOSHA_FAIL = new CodeMsg(500502, "秒杀失败");

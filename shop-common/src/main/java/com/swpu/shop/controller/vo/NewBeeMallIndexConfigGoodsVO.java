@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * 首页配置商品VO
+ * @author GODV
  */
 public class NewBeeMallIndexConfigGoodsVO implements Serializable {
 
