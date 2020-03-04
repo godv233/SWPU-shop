@@ -26,12 +26,12 @@
         <tr><td>商品名称</td><td>商品图片</td><td>商品原价</td><td>秒杀价</td><td>库存数量</td><td>详情</td></tr>
         <tr  th:each="goods,goodsStat : ${goodslist}">
             <td th:text="${goods.goodsName}"></td>
-            <td ><img th:src="@{${goods.goodsImg}}" width="100" height="100" /></td>
-            <td th:text="${goods.goodsPrice}"></td>
-            <td th:text="${goods.miaoshaPrice}"></td>
+<!--            <td ><img th:src="@{${goods.goods_cover_img}}" width="100" height="100" /></td>-->
+            <td th:text="${goods.sellingPrice}"></td>
+            <td th:text="${goods.flashPrice}"></td>
             <td th:text="${goods.stockCount}"></td>
 <!--            <td><a th:href="'/goods/to_detail/'+${goods.id}">详情</a></td>-->
-            <td><a th:href="'/goods_detail.htm?goodsId='+${goods.id}">详情</a></td>
+            <td><a th:href="'/goods_detail.htm?goodsId='+${goods.goodsId}">详情</a></td>
         </tr>
     </table>
 </div>

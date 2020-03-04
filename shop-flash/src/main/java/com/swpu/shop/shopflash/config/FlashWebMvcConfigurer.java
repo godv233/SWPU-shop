@@ -4,6 +4,7 @@ import com.swpu.shop.shopflash.intercepter.FlashLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -22,7 +23,15 @@ public class FlashWebMvcConfigurer  implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(flashLoginInterceptor)
-                .addPathPatterns("/*")
+                .addPathPatterns("/**")
                 .excludePathPatterns("/login");
+    }
+    /**
+     * 由于我们自动写了一个WebConfig的配置类，会让springboot的自动配置失效，需要我们自己写静态资源的映射器。
+     * @param registry
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/**");
     }
 }
