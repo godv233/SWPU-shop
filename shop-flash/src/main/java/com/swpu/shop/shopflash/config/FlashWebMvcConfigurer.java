@@ -1,5 +1,6 @@
 package com.swpu.shop.shopflash.config;
 
+import com.swpu.shop.common.Constants;
 import com.swpu.shop.shopflash.intercepter.FlashLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,7 @@ public class FlashWebMvcConfigurer  implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/**");
+        registry.addResourceHandler("/static/upload/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
+        registry.addResourceHandler("/goods-img/**").addResourceLocations("file:" + Constants.FILE_UPLOAD_DIC);
     }
 }
