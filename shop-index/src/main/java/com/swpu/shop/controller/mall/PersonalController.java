@@ -8,6 +8,7 @@ import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.redis.RedisService;
 import com.swpu.shop.redis.UserKey;
 import com.swpu.shop.service.NewBeeMallUserService;
+import com.swpu.shop.util.CookieUtil;
 import com.swpu.shop.util.MD5Util;
 import com.swpu.shop.util.Result;
 import com.swpu.shop.util.ResultGenerator;
@@ -57,7 +58,7 @@ public class PersonalController {
         //清除cookie并删除redis中的值
         //两种情况得到token
         String paramToken = request.getParameter("token");
-        String cookieToken = getCookieValue(request, "token");
+        String cookieToken = CookieUtil.getCookieValue(request, "token");
         String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
         redisService.delete(UserKey.token,token);
 
@@ -168,25 +169,6 @@ public class PersonalController {
         String kaptchaCode = httpSession.getAttribute(Constants.MALL_VERIFY_CODE_KEY) + "";
         if (StringUtils.isEmpty(kaptchaCode) || !loginVO.getVerifyCode().equals(kaptchaCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
-        }
-        return null;
-    }
-
-    /**
-     * cookie中得到token
-     * @param request
-     * @param cookieNameToken
-     * @return
-     */
-    private String getCookieValue(HttpServletRequest request, String cookieNameToken) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null || cookies.length <= 0) {
-            return null;
-        }
-        for (Cookie cookie : cookies) {
-            if (org.apache.commons.lang3.StringUtils.equals(cookie.getName(), cookieNameToken)) {
-                return cookie.getValue();
-            }
         }
         return null;
     }
