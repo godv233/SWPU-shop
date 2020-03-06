@@ -18,6 +18,18 @@
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+    <resultMap  id="BaseFlashResultMap" type="com.swpu.shop.controller.vo.FlashGoodsVo">
+        <id column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="goods_intro" jdbcType="VARCHAR" property="goodsIntro"/>
+        <result column="goods_cover_img" jdbcType="VARCHAR" property="goodsCoverImg"/>
+        <result column="selling_price" property="sellingPrice"/>
+
+        <result column="stock_count"  property="stockCount"/>
+        <result column="flash_price" property="flashPrice"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+    </resultMap>
     <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.swpu.shop.entity.NewBeeMallGoods">
         <result column="goods_detail_content" jdbcType="LONGVARCHAR" property="goodsDetailContent"/>
     </resultMap>
@@ -68,6 +80,11 @@
             limit #{start},#{limit}
         </if>
     </select>
+    <select id="findFlashGoodsList" parameterType="Map" resultMap="BaseFlashResultMap">
+        select *
+        FROM flash_goods fg
+        LEFT JOIN tb_newbee_mall_goods_info g ON fg.goods_id=g.goods_id
+    </select>
     <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -103,6 +120,12 @@
     delete from tb_newbee_mall_goods_info
     where goods_id = #{goodsId,jdbcType=BIGINT}
   </delete>
+    <delete id="deleteFlashBatch" >
+    delete from flash_goods where goods_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
     <insert id="insert" parameterType="com.swpu.shop.entity.NewBeeMallGoods">
     insert into tb_newbee_mall_goods_info (goods_id, goods_name, goods_intro, 
       goods_cover_img, goods_carousel, original_price, 
@@ -270,6 +293,24 @@
             </if>
         </set>
         where goods_id = #{goodsId,jdbcType=BIGINT}
+    </update>
+    <update id="updateFlashGoods" parameterType="com.swpu.shop.controller.vo.FlashGoodsVo">
+        update flash_goods
+        <set>
+            <if test="flashPrice !=null ">
+                flash_price=#{flashPrice}
+            </if>
+            <if test="stockCount !=null ">
+                stock_count=#{stockCount}
+            </if>
+            <if test="startDate !=null ">
+                start_date=#{startDate}
+            </if>
+            <if test="endDate !=null ">
+                end_date=#{endDate}
+            </if>
+        </set>
+        where goods_id=#{goodsId}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.swpu.shop.entity.NewBeeMallGoods">
     update tb_newbee_mall_goods_info

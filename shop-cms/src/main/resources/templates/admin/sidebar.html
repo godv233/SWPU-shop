@@ -89,6 +89,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a th:href="@{/admin/flashGoods}" th:class="${path}=='newbee_mall_flash_goods'?'nav-link active':'nav-link'">
+                        <i class="fa fa-flash nav-icon" aria-hidden="true"></i>
+                        <p>
+                            秒杀商品管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a th:href="@{/admin/users}" th:class="${path}=='users'?'nav-link active':'nav-link'">
                         <i class="fa fa-users nav-icon" aria-hidden="true"></i>
                         <p>

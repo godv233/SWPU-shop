@@ -1,5 +1,6 @@
 package com.swpu.shop.dao;
 
+import com.swpu.shop.controller.vo.FlashGoodsVo;
 import com.swpu.shop.entity.NewBeeMallGoods;
 import com.swpu.shop.entity.StockNumDTO;
 import com.swpu.shop.util.PageQueryUtil;
@@ -45,4 +46,24 @@ public interface NewBeeMallGoodsMapper {
      */
     int batchUpdateSellStatus(@Param("orderIds") Long[] orderIds, @Param("sellStatus") int sellStatus);
 
+    /**
+     * 秒杀商品列表查询
+     * @param pageUtil
+     * @return
+     */
+    List<FlashGoodsVo> findFlashGoodsList(PageQueryUtil pageUtil);
+
+    /**
+     * 批量删除秒杀goods
+     * @param ids
+     * @return
+     */
+    boolean deleteFlashBatch(Long[] ids);
+
+    /**
+     * 更新秒杀
+     * @param record
+     * @return
+     */
+    int updateFlashGoods(FlashGoodsVo record);
 }

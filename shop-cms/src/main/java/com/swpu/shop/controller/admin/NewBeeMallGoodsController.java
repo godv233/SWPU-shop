@@ -3,6 +3,7 @@ package com.swpu.shop.controller.admin;
 import com.swpu.shop.common.Constants;
 import com.swpu.shop.common.NewBeeMallCategoryLevelEnum;
 import com.swpu.shop.common.ServiceResultEnum;
+import com.swpu.shop.controller.vo.FlashGoodsVo;
 import com.swpu.shop.entity.GoodsCategory;
 import com.swpu.shop.entity.NewBeeMallGoods;
 import com.swpu.shop.service.NewBeeMallCategoryService;
@@ -39,7 +40,11 @@ public class NewBeeMallGoodsController {
         request.setAttribute("path", "newbee_mall_goods");
         return "admin/newbee_mall_goods";
     }
-
+    @GetMapping("flashGoods")
+    public String flashGoodsPage(HttpServletRequest request){
+        request.setAttribute("path","newbee_mall_flash_goods");
+        return "admin/newbee_mall_flash_goods";
+    }
     @GetMapping("/goods/edit")
     public String edit(HttpServletRequest request) {
         request.setAttribute("path", "edit");
@@ -119,6 +124,18 @@ public class NewBeeMallGoodsController {
     }
 
     /**
+     * 更改秒杀商品
+     * @param request
+     * @param goodsId
+     * @return
+     */
+    @GetMapping("/flashGoods/edit/{goodsId}")
+    public String flashGoodsEdit(HttpServletRequest request, @PathVariable("goodsId") Long goodsId){
+        request.setAttribute("path", "edit");
+
+    }
+
+    /**
      * 商品列表
      */
     @RequestMapping(value = "/goods/list", method = RequestMethod.GET)
@@ -129,6 +146,40 @@ public class NewBeeMallGoodsController {
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(newBeeMallGoodsService.getNewBeeMallGoodsPage(pageUtil));
+    }
+
+    /**
+     * 秒杀商品列表
+     * @param params
+     * @return
+     */
+    @GetMapping("/flashGoods/list")
+    @ResponseBody
+    public Result flashList(@RequestParam Map<String,Object> params){
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        return ResultGenerator.genSuccessResult(newBeeMallGoodsService.getFlashGoodsPage(pageUtil));
+    }
+
+    /**
+     * 批量删除秒杀商品
+     * 其实就是删除表的关联关系
+     * @param ids
+     * @return
+     */
+    @PostMapping("flashGoods/delete")
+    @ResponseBody
+    public Result deleteFlashGoods(@RequestBody Long[] ids){
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        if (newBeeMallGoodsService.deleteFlashGoodsBatch(ids)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult("删除失败");
+        }
     }
 
     /**
@@ -186,6 +237,27 @@ public class NewBeeMallGoodsController {
     }
 
     /**
+     * 修改秒杀商品
+     */
+    @RequestMapping(value = "/flashGoods/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Result update(@RequestBody FlashGoodsVo goodsVo) {
+        String result = newBeeMallGoodsService.updateFlashGoods(goodsVo);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+
+
+
+
+
+
+
+
+    /**
      * 批量修改销售状态
      */
     @RequestMapping(value = "/goods/status/{sellStatus}", method = RequestMethod.PUT)
@@ -203,5 +275,7 @@ public class NewBeeMallGoodsController {
             return ResultGenerator.genFailResult("修改失败");
         }
     }
+
+
 
 }

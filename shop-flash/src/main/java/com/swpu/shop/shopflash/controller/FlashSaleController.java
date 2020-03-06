@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.shopflash.common.CodeMsg;
 import com.swpu.shop.shopflash.common.Result;
+import com.swpu.shop.shopflash.intercepter.AccessLimit;
 import com.swpu.shop.shopflash.rabbitmq.MqSender;
 import com.swpu.shop.shopflash.rabbitmq.SaleMessage;
 import com.swpu.shop.shopflash.redis.GoodsKey;
@@ -76,13 +77,15 @@ public class FlashSaleController{
 
     /**
      * 得到path
-     *
+     *需要在这个地方做一个限流的处理
+     * accessLimit .这个地方可以做一个注解的形式
      * @param model
      * @param user
      * @param goodsId
      * @return
      */
     @GetMapping("/path")
+    @AccessLimit(seconds = 5,maxCount = 2,needLogin = true)
     @ResponseBody
     public Result<String> getFlashPath(Model model, MallUser user, @RequestParam("goodsId") long goodsId,
                                        @RequestParam(value = "verifyCode", defaultValue = "0") int verifyCode) {

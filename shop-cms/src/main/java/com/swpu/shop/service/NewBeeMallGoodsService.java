@@ -1,6 +1,7 @@
 package com.swpu.shop.service;
 
 import com.swpu.shop.common.ServiceResultEnum;
+import com.swpu.shop.controller.vo.FlashGoodsVo;
 import com.swpu.shop.dao.NewBeeMallGoodsMapper;
 import com.swpu.shop.entity.NewBeeMallGoods;
 import com.swpu.shop.util.BeanUtil;
@@ -37,6 +38,19 @@ public class NewBeeMallGoodsService{
     }
 
     /**
+     * 分页查询秒杀商品列表
+     * @param pageUtil
+     * @return
+     */
+    public PageResult getFlashGoodsPage(PageQueryUtil pageUtil) {
+        List<FlashGoodsVo> goodsList = goodsMapper.findFlashGoodsList(pageUtil);
+        int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+        PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+
+    /**
      * 保存
      * @param goods
      * @return
@@ -66,6 +80,22 @@ public class NewBeeMallGoodsService{
     }
 
     /**
+     * 更新秒杀商品
+     * @param goods
+     * @return
+     */
+    public String updateFlashGoods(FlashGoodsVo goods) {
+
+        if (goodsMapper.updateFlashGoods(goods) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+
+
+
+    /**
      * 查询
      * @param id
      * @return
@@ -84,4 +114,12 @@ public class NewBeeMallGoodsService{
         return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
     }
 
+    /**
+     * 批量删除秒杀商品
+     * @param ids
+     * @return
+     */
+    public boolean deleteFlashGoodsBatch(Long[] ids) {
+        return goodsMapper.deleteFlashBatch(ids);
+    }
 }
