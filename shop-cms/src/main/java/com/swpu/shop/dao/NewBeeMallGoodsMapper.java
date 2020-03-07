@@ -66,4 +66,11 @@ public interface NewBeeMallGoodsMapper {
      * @return
      */
     int updateFlashGoods(FlashGoodsVo record);
+
+    /**
+     * 查询ById
+     * @param goodsId
+     * @return
+     */
+    FlashGoodsVo selectFlashById(Long goodsId);
 }

@@ -40,9 +40,10 @@ public class NewBeeMallGoodsController {
         request.setAttribute("path", "newbee_mall_goods");
         return "admin/newbee_mall_goods";
     }
-    @GetMapping("flashGoods")
+    @GetMapping("/flashGoods")
     public String flashGoodsPage(HttpServletRequest request){
         request.setAttribute("path","newbee_mall_flash_goods");
+        System.out.println("111111111111111111111111111111111111111");
         return "admin/newbee_mall_flash_goods";
     }
     @GetMapping("/goods/edit")
@@ -132,6 +133,14 @@ public class NewBeeMallGoodsController {
     @GetMapping("/flashGoods/edit/{goodsId}")
     public String flashGoodsEdit(HttpServletRequest request, @PathVariable("goodsId") Long goodsId){
         request.setAttribute("path", "edit");
+        FlashGoodsVo flashGoods = newBeeMallGoodsService.getFlashGoodsById(goodsId);
+        if (flashGoods == null) {
+            return "error/error_400";
+        }else {
+            request.setAttribute("goods", flashGoods);
+            request.setAttribute("path", "flashGoods-edit");
+            return "admin/newbee_mall_flashGoods_edit";
+        }
 
     }
 
@@ -241,7 +250,7 @@ public class NewBeeMallGoodsController {
      */
     @RequestMapping(value = "/flashGoods/update", method = RequestMethod.POST)
     @ResponseBody
-    public Result update(@RequestBody FlashGoodsVo goodsVo) {
+    public Result update(FlashGoodsVo goodsVo) {
         String result = newBeeMallGoodsService.updateFlashGoods(goodsVo);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();

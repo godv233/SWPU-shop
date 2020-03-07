@@ -131,6 +131,7 @@ $('#confirmButton').click(function () {
     $('#goodsModal').modal('show');
 });
 
+
 $('#saveButton').click(function () {
     var goodsId = $('#goodsId').val();
     var goodsCategoryId = $('#levelThree option:selected').val();

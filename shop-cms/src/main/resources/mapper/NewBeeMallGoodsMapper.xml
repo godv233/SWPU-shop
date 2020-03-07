@@ -298,13 +298,13 @@
         update flash_goods
         <set>
             <if test="flashPrice !=null ">
-                flash_price=#{flashPrice}
+                flash_price=#{flashPrice},
             </if>
             <if test="stockCount !=null ">
-                stock_count=#{stockCount}
+                stock_count=#{stockCount},
             </if>
             <if test="startDate !=null ">
-                start_date=#{startDate}
+                start_date=#{startDate},
             </if>
             <if test="endDate !=null ">
                 end_date=#{endDate}
@@ -329,4 +329,7 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where goods_id = #{goodsId,jdbcType=BIGINT}
   </update>
+    <select id="selectFlashById" parameterType="java.lang.Long" resultMap="BaseFlashResultMap">
+        select * from flash_goods where goods_id = #{goodsId}
+    </select>
 </mapper>

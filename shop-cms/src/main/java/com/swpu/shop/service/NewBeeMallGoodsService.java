@@ -122,4 +122,13 @@ public class NewBeeMallGoodsService{
     public boolean deleteFlashGoodsBatch(Long[] ids) {
         return goodsMapper.deleteFlashBatch(ids);
     }
+
+    /**
+     * 查询秒杀商品
+     * @param goodsId
+     * @return
+     */
+    public FlashGoodsVo getFlashGoodsById(Long goodsId) {
+        return goodsMapper.selectFlashById(goodsId);
+    }
 }
