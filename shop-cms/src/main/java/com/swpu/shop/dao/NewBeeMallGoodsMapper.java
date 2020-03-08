@@ -73,4 +73,11 @@ public interface NewBeeMallGoodsMapper {
      * @return
      */
     FlashGoodsVo selectFlashById(Long goodsId);
+
+    /**
+     * 新增秒杀
+     * @param goodsVo
+     * @return
+     */
+    int insertFlashGoods(FlashGoodsVo goodsVo);
 }

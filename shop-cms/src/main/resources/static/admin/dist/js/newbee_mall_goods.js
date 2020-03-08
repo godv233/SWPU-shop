@@ -93,6 +93,17 @@ function editGoods() {
     }
     window.location.href = "/admin/goods/edit/" + id;
 }
+/**
+ * 设置秒杀商品
+ */
+function editFlashGoods() {
+    var id = getSelectedRow();
+    if (id == null) {
+        return;
+    }
+    window.location.href = "/admin/flashGoods/edit/" + id;
+}
+
 
 /**
  * 上架

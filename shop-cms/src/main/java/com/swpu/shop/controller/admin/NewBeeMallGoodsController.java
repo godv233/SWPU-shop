@@ -43,7 +43,6 @@ public class NewBeeMallGoodsController {
     @GetMapping("/flashGoods")
     public String flashGoodsPage(HttpServletRequest request){
         request.setAttribute("path","newbee_mall_flash_goods");
-        System.out.println("111111111111111111111111111111111111111");
         return "admin/newbee_mall_flash_goods";
     }
     @GetMapping("/goods/edit")
@@ -125,7 +124,7 @@ public class NewBeeMallGoodsController {
     }
 
     /**
-     * 更改秒杀商品
+     * 更改或者新增秒杀商品
      * @param request
      * @param goodsId
      * @return
@@ -135,12 +134,17 @@ public class NewBeeMallGoodsController {
         request.setAttribute("path", "edit");
         FlashGoodsVo flashGoods = newBeeMallGoodsService.getFlashGoodsById(goodsId);
         if (flashGoods == null) {
-            return "error/error_400";
+            //新增
+            FlashGoodsVo goodsVo=new FlashGoodsVo();
+            goodsVo.setGoodsId(goodsId);
+            request.setAttribute("goods", goodsVo);
+//            return "error/error_400";
         }else {
-            request.setAttribute("goods", flashGoods);
-            request.setAttribute("path", "flashGoods-edit");
-            return "admin/newbee_mall_flashGoods_edit";
+            //修改时数据回显
+            request.setAttribute("goods",flashGoods);
         }
+        request.setAttribute("path", "flashGoods-edit");
+        return "admin/newbee_mall_flashGoods_edit";
 
     }
 
@@ -246,12 +250,21 @@ public class NewBeeMallGoodsController {
     }
 
     /**
-     * 修改秒杀商品
+     * 新增或修改秒杀商品
      */
     @RequestMapping(value = "/flashGoods/update", method = RequestMethod.POST)
     @ResponseBody
     public Result update(FlashGoodsVo goodsVo) {
-        String result = newBeeMallGoodsService.updateFlashGoods(goodsVo);
+        //判断传过来的商品是否在秒杀列表中
+        FlashGoodsVo goods = newBeeMallGoodsService.getFlashGoodsById(goodsVo.getGoodsId());
+        String result;
+        if (goods==null){
+            //新增
+            result= newBeeMallGoodsService.saveFlashGoods(goodsVo);
+        }else {
+            //修改
+            result = newBeeMallGoodsService.updateFlashGoods(goodsVo);
+        }
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {

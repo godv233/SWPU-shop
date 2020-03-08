@@ -131,4 +131,16 @@ public class NewBeeMallGoodsService{
     public FlashGoodsVo getFlashGoodsById(Long goodsId) {
         return goodsMapper.selectFlashById(goodsId);
     }
+
+    /**
+     * 保存秒杀商品
+     * @param goodsVo
+     * @return
+     */
+    public String saveFlashGoods(FlashGoodsVo goodsVo) {
+        if (goodsMapper.insertFlashGoods(goodsVo) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
 }
