@@ -254,7 +254,7 @@ public class NewBeeMallGoodsController {
      */
     @RequestMapping(value = "/flashGoods/update")
     @ResponseBody
-    public Result update(FlashGoodsVo goodsVo) {
+    public Result update(@RequestBody FlashGoodsVo goodsVo) {
         //判断传过来的商品是否在秒杀列表中
         FlashGoodsVo goods = newBeeMallGoodsService.getFlashGoodsById(goodsVo.getGoodsId());
         String result;

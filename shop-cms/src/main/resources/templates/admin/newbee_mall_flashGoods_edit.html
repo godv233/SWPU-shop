@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace="admin/header::header-fragment">
-
 </header>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -28,12 +27,16 @@
                             <div class="form-group" style="display:flex;">
                                 <input type="hidden" id="goodsId" name="goodsId"
                                        th:value="${goods!=null and goods.goodsId!=null }?${goods.goodsId}: 0">
+                                <label class="col-md-2 control-label">秒杀价格</label>
                                 <input type="number" class="form-control col-sm-6" id="flashPrice"
                                        name="flashPrice"
                                        placeholder="*请输入商品秒杀价格"
                                        th:value="${goods!=null and goods.flashPrice!=null }?${goods.flashPrice}: 1"
                                        required="true">
                                 &nbsp;&nbsp;
+                            </div>
+                            <div class="form-group" style="display:flex;">
+                                <label class="col-md-2 control-label">秒杀库存</label>
                                 <input type="number" class="form-control col-sm-6" id="stockCount" name="stockCount"
                                        placeholder="*请输入商品库存数"
                                        th:value="${goods!=null and goods.stockCount!=null }?${goods.stockCount}: 0"
@@ -42,25 +45,10 @@
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">秒杀开始时间</label>
-                                <div class="input-group date form_datetime col-md-5" id="start_datetime" data-date="2018-10-16T05:25:07Z"
-                                     data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
-                                    <input class="form-control" size="6" type="text"  id="start_datetime_input" name="start_datetime" value="" readonly>
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                                </div>
-                                <input type="hidden" id="dtp_input1" value=""/><br/>
-                            </div>
-
-                            <div class="form-group">
+                                <input class="form-control" type="text" value="" id="starttime" readonly>
                                 <label class="col-md-2 control-label">秒杀结束时间</label>
-                                <div class="input-group date form_datetime col-md-5" id="end_datetime"  data-date="2018-10-16T05:25:07Z"
-                                     data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
-                                    <input class="form-control" size="6" type="text" id="end_datetime_input" name="end_datetime" value="" readonly>
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                                </div>
+                                <input class="form-control" type="text" value="" id="expirationDate" readonly>
                             </div>
-
                             <div class="form-group">
                                 <!-- 按钮 -->
                                 &nbsp;<button class="btn btn-info float-right" style="margin-left: 5px;"
@@ -131,8 +119,9 @@
 <script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
 <!-- Bootstrap 4 -->
 <script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/admin/plugins/bootstrap/js/bootstrap-datetimepicker.js}"></script>
-<script th:src="@{/admin/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js}"></script>
+<!--datetimepicker-->
+<script th:src="@{/admin/plugins/datetimepicker/bootstrap-datetimepicker.js}"></script>
+<script th:src="@{/admin/plugins/datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
 <!-- sweetalert -->
@@ -144,5 +133,43 @@
 <script th:src="@{/admin/plugins/kindeditor-4.1.10/lang/zh_CN.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
 <script th:src="@{/admin/dist/js/newbee_mall_flashGoods_edit.js}"></script>
+<script>
+    $('#starttime').datetimepicker({
+        format: 'yyyy-MM-dd HH:mm:ss',
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,//日期时间选择器打开之后首先显示的视图。 可接受的值：//0 分钟视图；1小时
+        minView: 0, //日期时间选择器所能够提供的最精确的时间选择视图
+        minuteStep: 1,//分钟
+        formatViewType: 'time'
+    }).on('hide', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var startTime = event.date;
+        $("#expirationDate").datetimepicker('setStartDate', startTime);
+        $("#expirationDate").val("");
+    });
+
+    $('#expirationDate').datetimepicker({
+        format: 'yyyy-MM-dd HH:mm:ss',
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,//日期时间选择器打开之后首先显示的视图。 可接受的值：//0 分钟视图；1小时
+        minView: 0, //日期时间选择器所能够提供的最精确的时间选择视图
+        minuteStep: 1,//分钟
+        formatViewType: 'time'
+    }).on('hide', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var endTime = event.date;
+        $("#startDate").datetimepicker('setEndDate', endTime);
+    });
+</script>
 </body>
 </html>

@@ -48,8 +48,8 @@ $('#confirmFlashButton').click(function () {
     var goodsId = $('#goodsId').val();
     var flashPrice = $('#flashPrice').val();
     var stockCount = $('#stockCount').val();
-    var startDate= $('#start_datetime_input').val();
-    var endDate= $('#end_datetime_input').val();
+    var startDate= $('#starttime').val();
+    var endDate= $('#expirationDate').val();
     console.log(goodsId)
     if (isNull(flashPrice)||flashPrice<0) {
         swal("请输入商品秒杀价格", {
@@ -63,17 +63,19 @@ $('#confirmFlashButton').click(function () {
         });
         return;
     }
-    $.ajax({
-        type:'post',
-        url:'/admin/flashGoods/update',
-        data:{
-            "goodsId":goodsId,
+    var data={
+        "goodsId":goodsId,
             "flashPrice":flashPrice,
             "stockCount":stockCount,
             "startDate":startDate,
             "endDate":endDate
-        },
-        contentType: 'application/x-www-form-urlencoded',
+    };
+    $.ajax({
+        type:'post',
+        url:'/admin/flashGoods/update',
+        data:JSON.stringify(data),
+        // contentType: 'application/x-www-form-urlencoded',
+        contentType: 'application/json',
         success:function(result){
             if (result.resultCode == 200) {
                 window.location.href = "/admin/flashGoods";
@@ -82,42 +84,3 @@ $('#confirmFlashButton').click(function () {
         }
     });
 });
-
-/**
- * 时间组件
- */
-$('.form_datetime').datetimepicker({
-    //language:  'fr',
-    weekStart: 1,
-    todayBtn: 1,
-    autoclose: 1,
-    todayHighlight: 1,
-    startView: 2,
-    forceParse: 0,
-    showMeridian: 1
-});
-
-const dateOptions = {
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd HH:ii',
-    minuteStep: 1,
-    autoclose: true
-};
-
-$('#start_datetime').datetimepicker(dateOptions).on('show', function () {
-    const endTime = $('#endDate').val();
-    if (endTime !== '') {
-        $(this).datetimepicker('setEndDate', endTime);
-    } else {
-        $(this).datetimepicker('setEndDate', null);
-    }
-});
-
-$('#end_datetime').datetimepicker(dateOptions).on('show', function () {
-    const startTime = $('#startDate').val();
-    if (startTime !== '') {
-        $(this).datetimepicker('setStartDate', startTime);
-    } else {
-        $(this).datetimepicker('setStartDate', null);
-    }
-})
