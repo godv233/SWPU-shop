@@ -30,7 +30,7 @@ import java.util.Random;
 @RequestMapping("/admin")
 public class UploadController {
 
-    @PostMapping({"/static/upload/file"})
+    @PostMapping({"/upload/file"})
     @ResponseBody
     public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) throws URISyntaxException {
         String fileName = file.getOriginalFilename();
