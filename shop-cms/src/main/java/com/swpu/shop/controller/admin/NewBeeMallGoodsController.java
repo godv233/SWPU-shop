@@ -252,7 +252,7 @@ public class NewBeeMallGoodsController {
     /**
      * 新增或修改秒杀商品
      */
-    @RequestMapping(value = "/flashGoods/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/flashGoods/update")
     @ResponseBody
     public Result update(FlashGoodsVo goodsVo) {
         //判断传过来的商品是否在秒杀列表中

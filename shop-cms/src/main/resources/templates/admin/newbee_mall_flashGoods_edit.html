@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<header th:replace="admin/header::header-fragment"></header>
+<header th:replace="admin/header::header-fragment">
+
+</header>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
@@ -37,6 +39,28 @@
                                        th:value="${goods!=null and goods.stockCount!=null }?${goods.stockCount}: 0"
                                        required="true">
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">秒杀开始时间</label>
+                                <div class="input-group date form_datetime col-md-5" id="start_datetime" data-date="2018-10-16T05:25:07Z"
+                                     data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
+                                    <input class="form-control" size="6" type="text"  id="start_datetime_input" name="start_datetime" value="" readonly>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <input type="hidden" id="dtp_input1" value=""/><br/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">秒杀结束时间</label>
+                                <div class="input-group date form_datetime col-md-5" id="end_datetime"  data-date="2018-10-16T05:25:07Z"
+                                     data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
+                                    <input class="form-control" size="6" type="text" id="end_datetime_input" name="end_datetime" value="" readonly>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <!-- 按钮 -->
                                 &nbsp;<button class="btn btn-info float-right" style="margin-left: 5px;"
@@ -107,6 +131,8 @@
 <script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
 <!-- Bootstrap 4 -->
 <script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap-datetimepicker.js}"></script>
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
 <!-- sweetalert -->
