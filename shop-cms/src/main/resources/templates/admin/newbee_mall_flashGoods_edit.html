@@ -31,7 +31,7 @@
                                 <input type="number" class="form-control col-sm-6" id="flashPrice"
                                        name="flashPrice"
                                        placeholder="*请输入商品秒杀价格"
-                                       th:value="${goods!=null and goods.flashPrice!=null }?${goods.flashPrice}: 1"
+                                       th:value="${goods!=null and goods.flashPrice!=null }?${goods.flashPrice}:0"
                                        required="true">
                                 &nbsp;&nbsp;
                             </div>
@@ -45,9 +45,9 @@
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">秒杀开始时间</label>
-                                <input class="form-control" type="text" value="" id="starttime" readonly>
+                                <input class="form-control" type="text" th:value="${goods!=null and goods.startDate!=null }?${#dates.format(goods.startDate, 'yyyy-MM-dd HH:mm:ss')}:'2020-03-03 14:26:56'" id="starttime" readonly>
                                 <label class="col-md-2 control-label">秒杀结束时间</label>
-                                <input class="form-control" type="text" value="" id="expirationDate" readonly>
+                                <input class="form-control" type="text" th:value="${goods!=null and goods.endDate!=null }?${#dates.format(goods.endDate, 'yyyy-MM-dd HH:mm:ss')}:'2020-03-03 14:26:56'" id="expirationDate" readonly>
                             </div>
                             <div class="form-group">
                                 <!-- 按钮 -->

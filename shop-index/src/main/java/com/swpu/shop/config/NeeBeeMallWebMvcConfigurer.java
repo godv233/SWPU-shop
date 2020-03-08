@@ -19,7 +19,7 @@ public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
     private NewBeeMallLoginInterceptor newBeeMallLoginInterceptor;
     @Autowired
     private NewBeeMallCartNumberInterceptor newBeeMallCartNumberInterceptor;
-
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 购物车中的数量统一处理
         registry.addInterceptor(newBeeMallCartNumberInterceptor)
