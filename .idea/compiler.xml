@@ -22,7 +22,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="SWPU-shop" options="-parameters" />
+      <module name="SWPU-shop" options="" />
       <module name="shop-cms" options="-parameters" />
       <module name="shop-flash" options="-parameters" />
       <module name="shop-index" options="-parameters" />
