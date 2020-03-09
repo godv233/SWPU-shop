@@ -2,15 +2,19 @@ package com.swpu.shop.shopflash.service;
 
 import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.entity.NewBeeMallOrder;
+import com.swpu.shop.entity.NewBeeMallOrderItem;
 import com.swpu.shop.shopflash.mapper.OrderDao;
 import com.swpu.shop.shopflash.redis.OrderKey;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.vo.FlashGoodsVo;
 import com.swpu.shop.shopflash.vo.FlashOrderDetailVo;
 import com.swpu.shop.shopflash.vo.FlashSaleOrder;
+import com.swpu.shop.util.NumberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 
 /**
@@ -49,26 +53,26 @@ public class OrderService {
      * @return
      */
     @Transactional
-    public NewBeeMallOrder createOrder(MallUser user, FlashGoodsVo goodsVo) {
-        //下普通订单
-        NewBeeMallOrder orderInfo=new NewBeeMallOrder();
-//        orderInfo.setCreateTime(new Date());
-//        orderInfo.setUserAddress(user.getAddress());
-//        orderInfo(goodsVo.getId());
-//        orderInfo.setGoodsName(goodsVo.getGoodsName());
-//        orderInfo.setGoodsPrice(goodsVo.getMiaoshaPrice());
-//        //一般通过程序判断:这里直接写死
-//        orderInfo.setOrderChannel(1);
-//        orderInfo.setStatus(0);
-//        orderInfo.setUserId(user.getId());
-//        orderDao.insert(orderInfo);
-        //秒杀订单
+    public NewBeeMallOrderItem createOrder(MallUser user, FlashGoodsVo goodsVo) {
         FlashSaleOrder flashSaleOrder=new FlashSaleOrder();
+        //生成订单号
+        flashSaleOrder.setOrderId(Long.parseLong(NumberUtil.genOrderNo()));
         flashSaleOrder.setGoodsId(goodsVo.getGoodsId());
         flashSaleOrder.setUserId(user.getUserId());
         orderDao.flashOrder(flashSaleOrder);
+        //插入redis
         boolean set = redisService.set(OrderKey.getMiaoshaOrderByUidGid, "" + user.getUserId() + goodsVo.getGoodsId(), flashSaleOrder);
-        return orderInfo;
+        //下普通订单
+        NewBeeMallOrderItem orderItem = new NewBeeMallOrderItem();
+        orderItem.setGoodsId(flashSaleOrder.getGoodsId());
+        orderItem.setGoodsCoverImg(goodsVo.getGoodsCoverImg());
+        orderItem.setCreateTime(new Date());
+        orderItem.setSellingPrice(goodsVo.getFlashPrice().intValue());
+        orderItem.setGoodsCount(1);
+        orderItem.setGoodsName(goodsVo.getGoodsName());
+        orderItem.setOrderId(flashSaleOrder.getOrderId());
+        orderDao.insertOrderItem(orderItem);
+        return orderItem;
     }
 
     /**

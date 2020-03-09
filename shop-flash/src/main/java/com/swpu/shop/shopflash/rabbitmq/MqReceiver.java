@@ -61,6 +61,6 @@ public class MqReceiver {
         //减库存
         //下订单
         //写入秒杀订单
-        NewBeeMallOrder orderInfo = flashSaleService.flash(user, goodsVo);
+        flashSaleService.flash(user, goodsVo);
     }
 }

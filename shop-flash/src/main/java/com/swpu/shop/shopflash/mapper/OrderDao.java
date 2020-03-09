@@ -1,6 +1,7 @@
 package com.swpu.shop.shopflash.mapper;
 
 import com.swpu.shop.entity.NewBeeMallOrder;
+import com.swpu.shop.entity.NewBeeMallOrderItem;
 import com.swpu.shop.shopflash.common.Result;
 import com.swpu.shop.shopflash.vo.FlashOrderDetailVo;
 import com.swpu.shop.shopflash.vo.FlashSaleOrder;
@@ -37,8 +38,7 @@ public interface OrderDao {
      * @param flashSaleOrder
      * @return
      */
-    @Insert("insert into flash_order (user_id, goods_id)values(#{userId}, #{goodsId})")
-    @SelectKey(keyColumn = "order_id",keyProperty = "orderId",resultType = long.class,before = false,statement = "select last_insert_id()")
+    @Insert("insert into flash_order (order_id,user_id, goods_id)values(#{orderId},#{userId}, #{goodsId})")
     int flashOrder(FlashSaleOrder flashSaleOrder);
     @Select("select *\n" +
             "FROM flash_order\n" +
@@ -49,4 +49,8 @@ public interface OrderDao {
     @Select("select * from flash_order where order_id=#{orderId}")
     FlashSaleOrder getOrderByOrderId(@Param("orderId") Long orderId);
 
+    @Insert("insert into tb_newbee_mall_order_item (order_id,goods_id,goods_name,goods_cover_img,selling_price,goods_count,create_time)" +
+            "values(#{orderId},#{goodsId}, #{goodsName},#{goodsCoverImg},#{sellingPrice},#{goodsCount},#{createTime})")
+    @SelectKey(keyColumn = "order_item_id", keyProperty = "orderItemId", resultType = long.class, before = false, statement = "select last_insert_id()")
+    int insertOrderItem(NewBeeMallOrderItem orderItem);
 }

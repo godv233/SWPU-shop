@@ -2,6 +2,7 @@ package com.swpu.shop.shopflash.service;
 
 import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.entity.NewBeeMallOrder;
+import com.swpu.shop.entity.NewBeeMallOrderItem;
 import com.swpu.shop.shopflash.redis.MiaoshaKey;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.vo.FlashGoodsVo;
@@ -158,7 +159,7 @@ public class FlashSaleService {
      * @return
      */
     @Transactional
-    public NewBeeMallOrder flash(MallUser user, FlashGoodsVo goodsVo) {
+    public NewBeeMallOrderItem flash(MallUser user, FlashGoodsVo goodsVo) {
         //减库存
         boolean success = goodsService.reduceStock(goodsVo);
         if (success) {
