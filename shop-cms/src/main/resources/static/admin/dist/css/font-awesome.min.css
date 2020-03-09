@@ -962,7 +962,10 @@
 }
 
 .fa-money:before {
-    content: "\f0d6"
+     content: "\f0d6"
+ }
+.flash-money:before {
+    content: "\f191"
 }
 
 .fa-caret-down:before {

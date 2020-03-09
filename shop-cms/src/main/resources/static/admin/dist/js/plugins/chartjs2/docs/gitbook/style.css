@@ -1182,6 +1182,10 @@ table {
     content: "\f0d6"
 }
 
+.flash-money:before {
+    content: "\f191"
+}
+
 .fa-caret-down:before {
     content: "\f0d7"
 }

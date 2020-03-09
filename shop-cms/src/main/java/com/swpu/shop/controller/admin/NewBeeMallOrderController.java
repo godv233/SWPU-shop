@@ -35,12 +35,28 @@ public class NewBeeMallOrderController {
         return "admin/newbee_mall_order";
     }
 
+    @GetMapping("/flashOrders")
+    public String flashOrderPage(HttpServletRequest request) {
+        request.setAttribute("path", "flashOrders");
+        return "admin/newbee_mall_flash_order";
+    }
+
     /**
      * 列表
      */
     @RequestMapping(value = "/orders/list", method = RequestMethod.GET)
     @ResponseBody
     public Result list(@RequestParam Map<String, Object> params) {
+        if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        PageQueryUtil pageUtil = new PageQueryUtil(params);
+        return ResultGenerator.genSuccessResult(newBeeMallOrderService.getFlashOrdersPage(pageUtil));
+    }
+
+    @RequestMapping("/flashOrders/list")
+    @ResponseBody
+    public Result flashList(@RequestParam Map<String, Object> params) {
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
             return ResultGenerator.genFailResult("参数异常！");
         }
@@ -100,6 +116,22 @@ public class NewBeeMallOrderController {
     }
 
     /**
+     * 秒杀配货
+     */
+    @RequestMapping(value = "/flashOrders/checkDone", method = RequestMethod.POST)
+    @ResponseBody
+    public Result flashCheckDone(@RequestBody Long[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = newBeeMallOrderService.flashCheckDone(ids);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+    /**
      * 出库
      */
     @RequestMapping(value = "/orders/checkOut", method = RequestMethod.POST)
@@ -133,5 +165,21 @@ public class NewBeeMallOrderController {
         }
     }
 
+    /**
+     * 关闭秒杀订单
+     */
+    @RequestMapping(value = "/flashOrders/close", method = RequestMethod.POST)
+    @ResponseBody
+    public Result closeFlashOrder(@RequestBody Long[] ids) {
+        if (ids.length < 1) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = newBeeMallOrderService.closeFlashOrder(ids);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
 
 }

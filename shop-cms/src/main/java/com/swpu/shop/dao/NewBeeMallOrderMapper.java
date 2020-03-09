@@ -74,4 +74,31 @@ public interface NewBeeMallOrderMapper {
      * @return
      */
     int checkDone(@Param("orderIds") List<Long> asList);
+
+    int flashCheckDone(@Param("orderIds") List<Long> asList);
+
+    /**
+     * 秒杀订单列表
+     *
+     * @param pageUtil
+     * @return
+     */
+    List<NewBeeMallOrder> findFlashOrderList(PageQueryUtil pageUtil);
+
+    /**
+     * 秒杀订单总数
+     *
+     * @param pageUtil
+     * @return
+     */
+    int getTotalFlashOrders(PageQueryUtil pageUtil);
+
+    /**
+     * 关闭秒杀订单
+     *
+     * @param asList
+     * @param orderStatus
+     * @return
+     */
+    int closeFlashOrder(@Param("orderIds") List<Long> asList, int orderStatus);
 }

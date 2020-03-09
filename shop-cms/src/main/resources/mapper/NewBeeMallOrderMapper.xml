@@ -16,6 +16,14 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+    <resultMap id="BaseFlashResultMap" type="com.swpu.shop.entity.NewBeeMallOrder">
+        <id column="order_id" jdbcType="BIGINT" property="orderNo"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="order_status" jdbcType="TINYINT" property="payStatus"/>
+        <result column="pay_type" jdbcType="TINYINT" property="payType"/>
+        <result column="order_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="total_price" jdbcType="INTEGER" property="totalPrice"/>
+    </resultMap>
     <sql id="Base_Column_List">
     order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
     extra_info, user_name, user_phone, user_address, is_deleted, create_time, update_time
@@ -73,6 +81,9 @@
             limit #{start},#{limit}
         </if>
     </select>
+    <select id="findFlashOrderList" parameterType="Map" resultMap="BaseFlashResultMap">
+        select * FROM flash_order
+    </select>
     <select id="getTotalNewBeeMallOrders" parameterType="Map" resultType="int">
         select count(*) from tb_newbee_mall_order
         <where>
@@ -99,9 +110,31 @@
             </if>
         </where>
     </select>
+    <select id="getTotalFlashOrders" parameterType="Map" resultType="int">
+        select count(*) from flash_order
+        <where>
+            <if test="userId!=null and userId!=''">
+                and user_id = #{userId}
+            </if>
+            <if test="payType!=null and payType!=''">
+                and pay_type = #{payType}
+            </if>
+            <if test="orderStatus!=null and orderStatus!=''">
+                and order_status = #{orderStatus}
+            </if>
+        </where>
+    </select>
     <update id="checkDone">
         update tb_newbee_mall_order
         set order_status = 2,update_time = now()
+        where order_id in
+        <foreach collection="orderIds" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+    <update id="flashCheckDone">
+        update flash_order
+        set order_status = 2
         where order_id in
         <foreach collection="orderIds" item="item" index="index"
                  open="(" separator="," close=")">#{item}
@@ -118,6 +151,14 @@
     <update id="closeOrder">
         update tb_newbee_mall_order
         set order_status = #{orderStatus},update_time = now()
+        where order_id in
+        <foreach collection="orderIds" item="item" index="index"
+                 open="(" separator="," close=")">#{item}
+        </foreach>
+    </update>
+    <update id="closeFlashOrder">
+        update flash_order
+        set order_status = #{orderStatus}
         where order_id in
         <foreach collection="orderIds" item="item" index="index"
                  open="(" separator="," close=")">#{item}

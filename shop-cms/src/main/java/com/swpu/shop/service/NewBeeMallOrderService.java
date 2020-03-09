@@ -38,6 +38,20 @@ public class NewBeeMallOrderService {
      * @return
      */
     public PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil) {
+        List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findFlashOrderList(pageUtil);
+        int total = newBeeMallOrderMapper.getTotalFlashOrders(pageUtil);
+        PageResult pageResult = new PageResult(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+
+    /**
+     * 秒杀订单列表
+     *
+     * @param pageUtil
+     * @return
+     */
+    public PageResult getFlashOrdersPage(PageQueryUtil pageUtil) {
         List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
         int total = newBeeMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
         PageResult pageResult = new PageResult(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
@@ -203,5 +217,28 @@ public class NewBeeMallOrderService {
             }
         }
         return null;
+    }
+
+    /**
+     * 秒杀配货
+     *
+     * @param ids
+     * @return
+     */
+    public String flashCheckDone(Long[] ids) {
+        if (newBeeMallOrderMapper.flashCheckDone(Arrays.asList(ids)) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        } else {
+            return ServiceResultEnum.DB_ERROR.getResult();
+        }
+
+    }
+
+    public String closeFlashOrder(Long[] ids) {
+        if (newBeeMallOrderMapper.closeFlashOrder(Arrays.asList(ids), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus()) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        } else {
+            return ServiceResultEnum.DB_ERROR.getResult();
+        }
     }
 }

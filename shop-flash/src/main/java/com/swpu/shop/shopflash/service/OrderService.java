@@ -59,7 +59,6 @@ public class OrderService {
         FlashSaleOrder flashSaleOrder=new FlashSaleOrder();
         //生成订单号
         flashSaleOrder.setOrderId(Long.parseLong(NumberUtil.genOrderNo()));
-
         flashSaleOrder.setOrderTime(new Date());
         flashSaleOrder.setGoodsId(goodsVo.getGoodsId());
         flashSaleOrder.setUserId(user.getUserId());
