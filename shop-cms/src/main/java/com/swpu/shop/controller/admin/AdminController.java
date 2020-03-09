@@ -22,22 +22,41 @@ public class AdminController {
     @Resource
     private AdminUserService adminUserService;
 
+    /**
+     * 跳转登陆页面
+     *
+     * @return
+     */
     @GetMapping({"/login"})
     public String login() {
         return "admin/login";
     }
 
+    /**
+     * 跳转index
+     * @param request
+     * @return
+     */
     @GetMapping({"", "/", "/index", "/index.html"})
     public String index(HttpServletRequest request) {
         request.setAttribute("path", "index");
         return "admin/index";
     }
 
+    /**
+     * 登录的验证逻辑
+     * @param userName
+     * @param password
+     * @param verifyCode
+     * @param session
+     * @return
+     */
     @PostMapping(value = "/login")
     public String login(@RequestParam("userName") String userName,
                         @RequestParam("password") String password,
                         @RequestParam("verifyCode") String verifyCode,
                         HttpSession session) {
+
         if (StringUtils.isEmpty(verifyCode)) {
             session.setAttribute("errorMsg", "验证码不能为空");
             return "admin/login";
@@ -46,6 +65,7 @@ public class AdminController {
             session.setAttribute("errorMsg", "用户名或密码不能为空");
             return "admin/login";
         }
+
         String kaptchaCode = session.getAttribute("verifyCode") + "";
         if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
             session.setAttribute("errorMsg", "验证码错误");
