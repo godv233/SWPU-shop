@@ -81,12 +81,22 @@
                                                                     </p>
                                                                     <p class="price"
                                                                        th:text="${item.sellingPrice+'元 x '+item.goodsCount}">
-                                                                        13元 × 1</p></li>
+                                                                        13元 × 1</p>
+
+                                                                </li>
                                                             </th:block>
                                                         </ul>
                                                     </td>
-                                                    <td class="order-actions"><a class="btn btn-small btn-line-gray"
-                                                                                 th:href="@{${'/orders/'+order.orderNo}}">订单详情</a>
+                                                    <td th:if="${order.payType!=null}" class="order-actions"><a
+                                                            class="btn btn-small btn-line-gray"
+                                                            th:href="@{${'/orders/'+order.orderNo}}">订单详情</a>
+                                                    </td>
+                                                    <td th:unless="${order.payType!=null}" class="name">
+                                                        <h3>收货信息:</h3>
+                                                        <p class="name"><a target="_blank"
+
+                                                                           th:text="${order.userAddress}">newbee</a>
+                                                        </p>
                                                     </td>
                                                 </tr>
                                                 </tbody>

@@ -62,6 +62,10 @@ public class OrderService {
         flashSaleOrder.setOrderTime(new Date());
         flashSaleOrder.setGoodsId(goodsVo.getGoodsId());
         flashSaleOrder.setUserId(user.getUserId());
+        //默认设置为1.可以调整
+        flashSaleOrder.setOrderStatus(1);
+        flashSaleOrder.setPayType(1);
+        flashSaleOrder.setTotalPrice(goodsVo.getFlashPrice());
         orderDao.flashOrder(flashSaleOrder);
         //插入redis
         boolean set = redisService.set(OrderKey.getMiaoshaOrderByUidGid, "" + user.getUserId() + goodsVo.getGoodsId(), flashSaleOrder);

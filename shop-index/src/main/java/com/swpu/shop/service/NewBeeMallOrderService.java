@@ -43,6 +43,7 @@ public class NewBeeMallOrderService {
 
     /**
      * 订单详情
+     *
      * @param orderNo
      * @param userId
      * @return
@@ -65,13 +66,16 @@ public class NewBeeMallOrderService {
         }
         return null;
     }
+
     /**
      * 个人的订单列表
+     *
      * @param pageUtil
      * @return
      */
     public PageResult getMyOrders(PageQueryUtil pageUtil) {
         int total = newBeeMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
+        //普通订单
         List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
         List<NewBeeMallOrderListVO> orderListVOS = new ArrayList<>();
         if (total > 0) {
@@ -96,12 +100,27 @@ public class NewBeeMallOrderService {
                 }
             }
         }
+        total += newBeeMallOrderMapper.getTotalFlashOrders(pageUtil);
+        //秒杀订单
+        List<NewBeeMallOrderListVO> flashOrderList = newBeeMallOrderMapper.findFlashOrderList(pageUtil);
+        //设置订单状态中文显示值
+        for (NewBeeMallOrderListVO newBeeMallOrderListVO : flashOrderList) {
+            newBeeMallOrderListVO.setOrderStatusString(NewBeeMallOrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(newBeeMallOrderListVO.getOrderStatus()).getName());
+            List<NewBeeMallOrderItemVO> orderItemVOS = newBeeMallOrderMapper.selectOrderItem(newBeeMallOrderListVO.getOrderId());
+            //goodsCount设置为1
+            for (NewBeeMallOrderItemVO item : orderItemVOS) {
+                item.setGoodsCount(1);
+            }
+            newBeeMallOrderListVO.setNewBeeMallOrderItemVOS(orderItemVOS);
+        }
+        orderListVOS.addAll(flashOrderList);
         PageResult pageResult = new PageResult(orderListVOS, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
 
     /**
      * 保存订单
+     *
      * @param user
      * @param myShoppingCartItems
      * @return
@@ -187,6 +206,7 @@ public class NewBeeMallOrderService {
 
     /**
      * 取消订单
+     *
      * @param orderNo
      * @param userId
      * @return
@@ -207,6 +227,7 @@ public class NewBeeMallOrderService {
 
     /**
      * 完成订单
+     *
      * @param orderNo
      * @param userId
      * @return
@@ -229,6 +250,7 @@ public class NewBeeMallOrderService {
 
     /**
      * 根据orderNO得到订单
+     *
      * @param orderNo
      * @return
      */
@@ -238,6 +260,7 @@ public class NewBeeMallOrderService {
 
     /**
      * 支付成功
+     *
      * @param orderNo
      * @param payType
      * @return

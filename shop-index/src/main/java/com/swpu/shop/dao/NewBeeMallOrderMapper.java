@@ -1,5 +1,7 @@
 package com.swpu.shop.dao;
 
+import com.swpu.shop.controller.vo.NewBeeMallOrderItemVO;
+import com.swpu.shop.controller.vo.NewBeeMallOrderListVO;
 import com.swpu.shop.entity.NewBeeMallOrder;
 import com.swpu.shop.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
@@ -25,12 +27,27 @@ public interface NewBeeMallOrderMapper {
     int getTotalNewBeeMallOrders(PageQueryUtil pageUtil);
 
     /**
+     * 秒杀总数
+     *
+     * @param pageUtil
+     * @return
+     */
+    int getTotalFlashOrders(PageQueryUtil pageUtil);
+
+    /**
      * 列表
      * @param pageUtil
      * @return
      */
     List<NewBeeMallOrder> findNewBeeMallOrderList(PageQueryUtil pageUtil);
 
+    /**
+     * 秒杀订单列表
+     *
+     * @param pageUtil
+     * @return
+     */
+    List<NewBeeMallOrderListVO> findFlashOrderList(PageQueryUtil pageUtil);
     /**
      * 插入
      * @param record
@@ -53,6 +70,11 @@ public interface NewBeeMallOrderMapper {
      */
     int updateByPrimaryKeySelective(NewBeeMallOrder record);
 
-
-
+    /**
+     * 查询秒杀订单详情
+     *
+     * @param orderNo
+     * @return
+     */
+    List<NewBeeMallOrderItemVO> selectOrderItem(long orderNo);
 }

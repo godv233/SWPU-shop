@@ -38,7 +38,8 @@ public interface OrderDao {
      * @param flashSaleOrder
      * @return
      */
-    @Insert("insert into flash_order (order_id,user_id,goods_id,order_time)values(#{orderId},#{userId}, #{goodsId},#{orderTime})")
+    @Insert("insert into flash_order (order_id,user_id,goods_id,order_time,order_status,pay_type,total_price)" +
+            "values(#{orderId},#{userId}, #{goodsId},#{orderTime},#{orderStatus},#{payType},#{totalPrice})")
     int flashOrder(FlashSaleOrder flashSaleOrder);
     @Select("select *\n" +
             "FROM flash_order\n" +

@@ -16,6 +16,23 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+    <resultMap id="BaseFlashResultMap" type="com.swpu.shop.controller.vo.NewBeeMallOrderListVO">
+        <!--        这里是一个错误的绑定,只是为了数据-->
+        <id column="goods_id" property="orderId"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="total_price" jdbcType="INTEGER" property="totalPrice"/>
+        <!--        <result column="pay_type" jdbcType="TINYINT" property="payType"/>-->
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="order_status" jdbcType="TINYINT" property="orderStatus"/>
+        <result column="user_address" jdbcType="VARCHAR" property="userAddress"/>
+    </resultMap>
+    <resultMap id="BaseOrderItemMap" type="com.swpu.shop.controller.vo.NewBeeMallOrderItemVO">
+        <id column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="goods_cover_img" property="goodsCoverImg"/>
+        <result column="flash_price" property="sellingPrice"/>
+
+    </resultMap>
     <sql id="Base_Column_List">
     order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
     extra_info, user_name, user_phone, user_address, is_deleted, create_time, update_time
@@ -59,7 +76,28 @@
             limit #{start},#{limit}
         </if>
     </select>
-
+    <select id="findFlashOrderList" parameterType="Map" resultMap="BaseFlashResultMap">
+        select
+            gi.goods_id,
+            order_id as order_no,
+            total_price,
+            order_status,
+            order_time AS create_time,
+            address AS user_address
+        from flash_order fo
+        LEFT JOIN tb_newbee_mall_goods_info gi ON  fo.goods_id=gi.goods_id
+        LEFT JOIN tb_newbee_mall_user u on u.user_id=fo.user_id
+    </select>
+    <select id="selectOrderItem" resultMap="BaseOrderItemMap">
+        select
+    gi.goods_id,
+    gi.goods_name,
+    gi.goods_cover_img,
+    flash_goods.flash_price
+    from tb_newbee_mall_goods_info gi
+    LEFT JOIN flash_goods on flash_goods.goods_id=gi.goods_id
+    where gi.goods_id=10889
+    </select>
     <select id="getTotalNewBeeMallOrders" parameterType="Map" resultType="int">
         select count(*) from tb_newbee_mall_order
         <where>
@@ -83,6 +121,14 @@
             </if>
             <if test="endTime != null and endTime.trim() != ''">
                 and create_time &lt; #{endTime}
+            </if>
+        </where>
+    </select>
+    <select id="getTotalFlashOrders" parameterType="Map" resultType="int">
+        select count(*) from flash_order
+        <where>
+            <if test="userId!=null and userId!=''">
+                and user_id = #{userId}
             </if>
         </where>
     </select>
