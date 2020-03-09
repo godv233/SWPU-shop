@@ -1,17 +1,15 @@
 package com.swpu.shop.shopflash.controller;
 
-import com.swpu.shop.entity.MallUser;
-import com.swpu.shop.entity.NewBeeMallOrder;
-import com.swpu.shop.shopflash.common.CodeMsg;
+
 import com.swpu.shop.shopflash.common.Result;
+import com.swpu.shop.shopflash.intercepter.UserContext;
 import com.swpu.shop.shopflash.service.GoodsService;
 import com.swpu.shop.shopflash.service.OrderService;
-import com.swpu.shop.shopflash.vo.FlashGoodsDetailVo;
-import com.swpu.shop.shopflash.vo.FlashGoodsVo;
+
 import com.swpu.shop.shopflash.vo.FlashOrderDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,6 +38,7 @@ public class OrderController {
     @ResponseBody
     public Result<FlashOrderDetailVo> info(@RequestParam("orderId") long orderId) {
         FlashOrderDetailVo detail = orderService.getOrderDetailById(orderId);
+        detail.setUser(UserContext.getUser());
         return Result.success(detail);
 
     }

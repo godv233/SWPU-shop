@@ -47,12 +47,12 @@
         </td>
      </tr>
       <tr>
-     		<td>收货人</td>  
-        	<td colspan="2">XXX  18812341234</td>  
+     		<td>收货人</td>
+          <td id="userName" colspan="2"></td>
      </tr>
      <tr>
-     		<td>收货地址</td>  
-        	<td colspan="2">北京市昌平区回龙观龙博一区</td>  
+     		<td>收货地址</td>
+         <td id="address" colspan="2"></td>
      </tr>
   </table>
 </div>
@@ -62,10 +62,16 @@
 function render(detail){
 	var goods = detail.goods;
 	var order = detail.order;
+    var user = detail.user;
 	$("#goodsName").text(goods.goodsName);
 	$("#goodsImg").attr("src", goods.goodsCoverImg);
-	$("#orderPrice").text(order.goodsPrice);
-	$("#createDate").text(new Date(order.createDate).format("yyyy-MM-dd hh:mm:ss"));
+    $("#orderPrice").text(goods.flashPrice);
+    $("#createDate").text(new Date(order.orderTime).format("yyyy-MM-dd hh:mm:ss"));
+    $("#userName").text(user.nickName);
+    $("#address").text(user.address);
+
+
+
 	var status = "";
 	if(order.status == 0){
 		status = "未支付"

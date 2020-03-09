@@ -30,6 +30,8 @@ public class OrderService {
     private RedisService redisService;
     @Autowired
     private GoodsService goodsService;
+    @Autowired
+    private UserService userService;
     /**
      * 通过userid和goodsId得到订单
      * @param userId
@@ -57,6 +59,8 @@ public class OrderService {
         FlashSaleOrder flashSaleOrder=new FlashSaleOrder();
         //生成订单号
         flashSaleOrder.setOrderId(Long.parseLong(NumberUtil.genOrderNo()));
+
+        flashSaleOrder.setOrderTime(new Date());
         flashSaleOrder.setGoodsId(goodsVo.getGoodsId());
         flashSaleOrder.setUserId(user.getUserId());
         orderDao.flashOrder(flashSaleOrder);

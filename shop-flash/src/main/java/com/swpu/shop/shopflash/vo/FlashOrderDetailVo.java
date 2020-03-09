@@ -1,5 +1,6 @@
 package com.swpu.shop.shopflash.vo;
 
+import com.swpu.shop.entity.MallUser;
 import lombok.Data;
 
 /**
@@ -10,4 +11,5 @@ import lombok.Data;
 public class FlashOrderDetailVo {
 	private FlashGoodsVo goods;
 	private FlashSaleOrder order;
+    private MallUser user;
 }

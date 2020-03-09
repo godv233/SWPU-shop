@@ -62,7 +62,7 @@
         </tr>
         <tr>
             <td>商品原价</td>
-            <td colspan="3" id="goodsPrice"></td>
+            <td colspan="3" id="originalPrice"></td>
         </tr>
         <tr>
             <td>秒杀价</td>
@@ -173,7 +173,7 @@
         $("#startTime").text(new Date(goods.startDate).format("yyyy-MM-dd hh:mm:ss"));
         $("#remainSeconds").val(remainSeconds);
         $("#goodsId").val(goods.goodsId);
-        $("#goodsPrice").text(goods.goodsPrice);
+        $("#originalPrice").text(goods.sellingPrice);
         $("#flashPrice").text(goods.flashPrice);
         $("#stockCount").text(goods.stockCount);
         countDown();
