@@ -35,5 +35,9 @@ public class Constants {
 
     public final static int SELL_STATUS_UP = 0;//商品上架状态
     public final static int SELL_STATUS_DOWN = 1;//商品下架状态
+    public final static String INDEX_TOKEN = "IndexToken";//index系统的token
+    public final static String CMS_TOKEN = "CmsToken";//cms系统的token
+
+
 
 }

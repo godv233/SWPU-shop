@@ -1,5 +1,6 @@
 package com.swpu.shop.shopflash.intercepter;
 
+import com.swpu.shop.common.Constants;
 import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.service.UserService;
@@ -43,8 +44,8 @@ public class FlashLoginInterceptor implements HandlerInterceptor {
      * @return
      */
     public MallUser getUser(HttpServletRequest request, HttpServletResponse response){
-        String paramToken=request.getParameter("token");
-        String cookieToken= CookieUtil.getCookieValue(request,"token");
+        String paramToken = request.getParameter(Constants.INDEX_TOKEN);
+        String cookieToken = CookieUtil.getCookieValue(request, Constants.INDEX_TOKEN);
         //以此判断两种方式传入token
         if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
             return null;

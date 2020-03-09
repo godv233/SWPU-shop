@@ -1,5 +1,6 @@
 package com.swpu.shop.shopflash.service;
 
+import com.swpu.shop.common.Constants;
 import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.redis.UserKey;
@@ -33,7 +34,7 @@ public class UserService {
         return user;
     }
 
-    /**
+    /*
      * 生成一个cookie
      * @param user
      * @param token
@@ -41,7 +42,7 @@ public class UserService {
      */
     private void addCookie(MallUser user, String token, HttpServletResponse response) {
         redisService.set(UserKey.token, token, user);
-        Cookie cookie = new Cookie("token", token);
+        Cookie cookie = new Cookie(Constants.INDEX_TOKEN, token);
         cookie.setMaxAge(UserKey.token.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);

@@ -46,7 +46,7 @@ public class NewBeeMallUserService{
             //将用户的信息存放在redis中,并且将token设置进cookie
             String token = UUIDUtils.uuid();
             redisService.set(UserKey.token,token,user);
-            Cookie cookie=new Cookie("token",token);
+            Cookie cookie = new Cookie(Constants.INDEX_TOKEN, token);
             cookie.setMaxAge(UserKey.token.expireSeconds());
             response.addCookie(cookie);
             //昵称太长 影响页面展示

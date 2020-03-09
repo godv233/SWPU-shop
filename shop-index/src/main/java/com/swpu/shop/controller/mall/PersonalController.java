@@ -57,8 +57,8 @@ public class PersonalController {
         httpSession.removeAttribute(Constants.MALL_USER_SESSION_KEY);
         //清除cookie并删除redis中的值
         //两种情况得到token
-        String paramToken = request.getParameter("token");
-        String cookieToken = CookieUtil.getCookieValue(request, "token");
+        String paramToken = request.getParameter(Constants.INDEX_TOKEN);
+        String cookieToken = CookieUtil.getCookieValue(request, Constants.INDEX_TOKEN);
         String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
         redisService.delete(UserKey.token,token);
 
