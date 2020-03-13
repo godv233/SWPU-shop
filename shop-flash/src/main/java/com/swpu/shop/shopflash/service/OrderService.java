@@ -9,7 +9,7 @@ import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.vo.FlashGoodsVo;
 import com.swpu.shop.shopflash.vo.FlashOrderDetailVo;
 import com.swpu.shop.shopflash.vo.FlashSaleOrder;
-import com.swpu.shop.util.NumberUtil;
+import com.swpu.shop.util.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +58,9 @@ public class OrderService {
     public NewBeeMallOrderItem createOrder(MallUser user, FlashGoodsVo goodsVo) {
         FlashSaleOrder flashSaleOrder=new FlashSaleOrder();
         //生成订单号
-        flashSaleOrder.setOrderId(Long.parseLong(NumberUtil.genOrderNo()));
+        //机器id为1.数据id为1 这是秒杀系统，后期可以放在配置文件中
+        SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker(1L, 1L);
+        flashSaleOrder.setOrderId(snowflakeIdWorker.nextId());
         flashSaleOrder.setOrderTime(new Date());
         flashSaleOrder.setGoodsId(goodsVo.getGoodsId());
         flashSaleOrder.setUserId(user.getUserId());

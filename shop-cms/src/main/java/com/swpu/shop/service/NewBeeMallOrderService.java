@@ -2,15 +2,11 @@ package com.swpu.shop.service;
 
 import com.swpu.shop.common.*;
 import com.swpu.shop.controller.vo.*;
-import com.swpu.shop.dao.NewBeeMallGoodsMapper;
 import com.swpu.shop.dao.NewBeeMallOrderItemMapper;
 import com.swpu.shop.dao.NewBeeMallOrderMapper;
-import com.swpu.shop.entity.NewBeeMallGoods;
 import com.swpu.shop.entity.NewBeeMallOrder;
 import com.swpu.shop.entity.NewBeeMallOrderItem;
-import com.swpu.shop.entity.StockNumDTO;
 import com.swpu.shop.util.BeanUtil;
-import com.swpu.shop.util.NumberUtil;
 import com.swpu.shop.util.PageQueryUtil;
 import com.swpu.shop.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -11,14 +11,13 @@ import com.swpu.shop.entity.NewBeeMallOrder;
 import com.swpu.shop.entity.NewBeeMallOrderItem;
 import com.swpu.shop.entity.StockNumDTO;
 import com.swpu.shop.util.BeanUtil;
-import com.swpu.shop.util.NumberUtil;
 import com.swpu.shop.util.PageQueryUtil;
 import com.swpu.shop.util.PageResult;
+import com.swpu.shop.util.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.function.Function;
@@ -159,7 +158,11 @@ public class NewBeeMallOrderService {
                     NewBeeMallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
                 }
                 //生成订单号
-                String orderNo = NumberUtil.genOrderNo();
+                //机器id为2.数据id为2
+                //机器id为1.数据id为1
+                SnowflakeIdWorker snowflakeIdWorker = new SnowflakeIdWorker(2L, 2L);
+
+                String orderNo = String.valueOf(snowflakeIdWorker.nextId());
                 int priceTotal = 0;
                 //保存订单
                 NewBeeMallOrder newBeeMallOrder = new NewBeeMallOrder();
