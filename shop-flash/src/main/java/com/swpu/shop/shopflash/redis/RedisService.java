@@ -47,8 +47,9 @@ public class RedisService {
     public Object get(KeyPrefix prefix, String key) {
         Object result = null;
         //真正的key
-        if (StringUtils.isEmpty(key))
+        if (StringUtils.isEmpty(key)) {
             return null;
+        }
         String realKey = prefix.getPrefix() + key;
         try {
             result = redisTemplate.opsForValue().get(realKey);
@@ -67,7 +68,9 @@ public class RedisService {
      */
     public long decrease(KeyPrefix prefix, String key) {
         String realKey = prefix.getPrefix() + key;
-        if (StringUtils.isEmpty(realKey)) return 0;
+        if (StringUtils.isEmpty(realKey)) {
+            return 0;
+        }
         long result = 0;
         try {
             result = redisTemplate.opsForValue().decrement(realKey);
@@ -79,7 +82,9 @@ public class RedisService {
 
     public boolean exists(KeyPrefix prefix, String key) {
         String realKey = prefix.getPrefix() + key;
-        if (StringUtils.isEmpty(realKey)) return false;
+        if (StringUtils.isEmpty(realKey)) {
+            return false;
+        }
         return redisTemplate.hasKey(realKey);
     }
 

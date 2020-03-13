@@ -95,7 +95,9 @@ public class PersonalController {
                         HttpSession httpSession) {
         Result result = serverCheck(loginVO, httpSession);
         //校验不通过
-        if (result!=null) return result;
+        if (result != null) {
+            return result;
+        }
         //todo 清verifyCode
         String loginResult = newBeeMallUserService.login(loginVO.getLoginName(), MD5Util.MD5Encode(loginVO.getPassword(), "UTF-8"), httpSession,response);
         //登录成功
@@ -119,7 +121,9 @@ public class PersonalController {
                            HttpSession httpSession) {
         Result result = serverCheck(loginVO, httpSession);
         //校验不通过
-        if (result!=null) return result;
+        if (result != null) {
+            return result;
+        }
         //todo 清verifyCode
         String registerResult = newBeeMallUserService.register(loginVO.getLoginName(), loginVO.getPassword());
         //注册成功
