@@ -1,7 +1,6 @@
 package com.swpu.shop.shopflash.service;
 
 import com.swpu.shop.entity.MallUser;
-import com.swpu.shop.entity.NewBeeMallOrder;
 import com.swpu.shop.entity.NewBeeMallOrderItem;
 import com.swpu.shop.shopflash.mapper.OrderDao;
 import com.swpu.shop.shopflash.redis.OrderKey;

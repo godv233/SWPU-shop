@@ -10,11 +10,8 @@ import com.swpu.shop.shopflash.rabbitmq.SaleMessage;
 import com.swpu.shop.shopflash.redis.GoodsKey;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.service.FlashSaleService;
-import com.swpu.shop.shopflash.service.GoodsService;
 import com.swpu.shop.shopflash.service.OrderService;
-import com.swpu.shop.shopflash.vo.FlashGoodsVo;
 import com.swpu.shop.shopflash.vo.FlashSaleOrder;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +21,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
-import java.util.List;
 
 /**
  * 秒杀的控制器
@@ -37,8 +33,6 @@ import java.util.List;
 public class FlashSaleController{
     @Autowired
     private RedisService redisService;
-    @Autowired
-    private GoodsService goodsService;
     @Autowired
     private FlashSaleService flashSaleService;
     @Autowired

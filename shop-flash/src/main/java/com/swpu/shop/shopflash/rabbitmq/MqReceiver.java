@@ -1,7 +1,6 @@
 package com.swpu.shop.shopflash.rabbitmq;
 
 import com.swpu.shop.entity.MallUser;
-import com.swpu.shop.entity.NewBeeMallOrder;
 import com.swpu.shop.shopflash.config.MqConfig;
 import com.swpu.shop.shopflash.service.FlashSaleService;
 import com.swpu.shop.shopflash.service.GoodsService;

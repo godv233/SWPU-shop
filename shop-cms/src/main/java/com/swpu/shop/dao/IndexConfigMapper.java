@@ -6,8 +6,10 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 public interface IndexConfigMapper {
-    int deleteByPrimaryKey(Long configId);
 
     int insert(IndexConfig record);
 

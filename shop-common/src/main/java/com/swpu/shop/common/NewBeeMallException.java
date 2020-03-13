@@ -1,5 +1,10 @@
 package com.swpu.shop.common;
 
+/**
+ * 异常配置
+ *
+ * @author GODV
+ */
 public class NewBeeMallException extends RuntimeException {
 
     public NewBeeMallException() {

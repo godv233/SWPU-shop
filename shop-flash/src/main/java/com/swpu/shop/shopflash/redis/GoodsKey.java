@@ -2,6 +2,7 @@ package com.swpu.shop.shopflash.redis;
 
 /**
  * 商品key
+ * @author GODV
  */
 public class GoodsKey extends BasePrefix {
 

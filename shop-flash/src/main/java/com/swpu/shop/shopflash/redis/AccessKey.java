@@ -2,6 +2,7 @@ package com.swpu.shop.shopflash.redis;
 
 /**
  * redis的限流的key
+ * @author GODV
  */
 public class AccessKey extends BasePrefix{
 

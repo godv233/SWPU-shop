@@ -10,12 +10,6 @@ import java.util.List;
  * @author GODV
  */
 public interface CarouselMapper {
-    /**
-     * 删除
-     * @param carouselId
-     * @return
-     */
-    int deleteByPrimaryKey(Integer carouselId);
 
     /**
      * 插入

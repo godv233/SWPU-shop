@@ -40,7 +40,6 @@ public class NewBeeMallGoodsIndexConfigController {
         if (indexConfigTypeEnum.equals(IndexConfigTypeEnum.DEFAULT)) {
             return "error/error_5xx";
         }
-
         request.setAttribute("path", indexConfigTypeEnum.getName());
         request.setAttribute("configType", configType);
         return "admin/newbee_mall_index_config";
@@ -77,7 +76,6 @@ public class NewBeeMallGoodsIndexConfigController {
             return ResultGenerator.genFailResult(result);
         }
     }
-
 
     /**
      * 修改

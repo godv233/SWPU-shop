@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class FlashLoginInterceptor implements HandlerInterceptor {
     @Autowired
-    private RedisService redisService;
-    @Autowired
     private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

@@ -12,7 +12,6 @@ import java.util.List;
  * @author GODV
  */
 public interface NewBeeMallGoodsMapper {
-    int deleteByPrimaryKey(Long goodsId);
 
     int insert(NewBeeMallGoods record);
 

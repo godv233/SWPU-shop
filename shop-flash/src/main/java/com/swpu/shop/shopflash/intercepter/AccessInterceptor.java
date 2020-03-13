@@ -25,8 +25,6 @@ import java.io.OutputStream;
 @Service
 public class AccessInterceptor extends HandlerInterceptorAdapter {
     @Autowired
-    private UserService userService;
-    @Autowired
     private RedisService redisService;
 
     /**

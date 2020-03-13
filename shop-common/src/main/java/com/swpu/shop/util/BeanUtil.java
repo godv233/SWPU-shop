@@ -9,6 +9,9 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * @author GODV
+ */
 public abstract class BeanUtil {
 
     public static Object copyProperties(Object source, Object target, String... ignoreProperties) {

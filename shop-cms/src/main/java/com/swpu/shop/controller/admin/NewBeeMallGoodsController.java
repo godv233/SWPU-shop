@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 商品管理
  * @author GODV
  */
 @Controller
@@ -35,16 +36,34 @@ public class NewBeeMallGoodsController {
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
 
+    /**
+     * 返回商品页面
+     *
+     * @param request
+     * @return
+     */
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
         request.setAttribute("path", "newbee_mall_goods");
         return "admin/newbee_mall_goods";
     }
+
+    /**
+     * 秒杀商品
+     * @param request
+     * @return
+     */
     @GetMapping("/flashGoods")
     public String flashGoodsPage(HttpServletRequest request){
         request.setAttribute("path","newbee_mall_flash_goods");
         return "admin/newbee_mall_flash_goods";
     }
+
+    /**
+     * 商品更改。回显数据
+     * @param request
+     * @return
+     */
     @GetMapping("/goods/edit")
     public String edit(HttpServletRequest request) {
         request.setAttribute("path", "edit");
@@ -66,6 +85,12 @@ public class NewBeeMallGoodsController {
         return "error/error_5xx";
     }
 
+    /**
+     * 商品更改
+     * @param request
+     * @param goodsId
+     * @return
+     */
     @GetMapping("/goods/edit/{goodsId}")
     public String edit(HttpServletRequest request, @PathVariable("goodsId") Long goodsId) {
         request.setAttribute("path", "edit");
@@ -201,16 +226,7 @@ public class NewBeeMallGoodsController {
     @RequestMapping(value = "/goods/save", method = RequestMethod.POST)
     @ResponseBody
     public Result save(@RequestBody NewBeeMallGoods newBeeMallGoods) {
-        if (StringUtils.isEmpty(newBeeMallGoods.getGoodsName())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsIntro())
-                || StringUtils.isEmpty(newBeeMallGoods.getTag())
-                || Objects.isNull(newBeeMallGoods.getOriginalPrice())
-                || Objects.isNull(newBeeMallGoods.getGoodsCategoryId())
-                || Objects.isNull(newBeeMallGoods.getSellingPrice())
-                || Objects.isNull(newBeeMallGoods.getStockNum())
-                || Objects.isNull(newBeeMallGoods.getGoodsSellStatus())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
+        if (checkGoodsData(newBeeMallGoods)) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         String result = newBeeMallGoodsService.saveNewBeeMallGoods(newBeeMallGoods);
@@ -228,17 +244,7 @@ public class NewBeeMallGoodsController {
     @RequestMapping(value = "/goods/update", method = RequestMethod.POST)
     @ResponseBody
     public Result update(@RequestBody NewBeeMallGoods newBeeMallGoods) {
-        if (Objects.isNull(newBeeMallGoods.getGoodsId())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsName())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsIntro())
-                || StringUtils.isEmpty(newBeeMallGoods.getTag())
-                || Objects.isNull(newBeeMallGoods.getOriginalPrice())
-                || Objects.isNull(newBeeMallGoods.getSellingPrice())
-                || Objects.isNull(newBeeMallGoods.getGoodsCategoryId())
-                || Objects.isNull(newBeeMallGoods.getStockNum())
-                || Objects.isNull(newBeeMallGoods.getGoodsSellStatus())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
-                || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
+        if (Objects.isNull(newBeeMallGoods.getGoodsId()) || checkGoodsData(newBeeMallGoods)) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         String result = newBeeMallGoodsService.updateNewBeeMallGoods(newBeeMallGoods);
@@ -250,6 +256,26 @@ public class NewBeeMallGoodsController {
     }
 
     /**
+     * 判断数据是否异常，其实可以直接在jsr303。再类上使用注解来实现
+     *
+     * @param newBeeMallGoods
+     * @return
+     */
+    private boolean checkGoodsData(NewBeeMallGoods newBeeMallGoods) {
+        return StringUtils.isEmpty(newBeeMallGoods.getGoodsName())
+                || StringUtils.isEmpty(newBeeMallGoods.getGoodsIntro())
+                || StringUtils.isEmpty(newBeeMallGoods.getTag())
+                || Objects.isNull(newBeeMallGoods.getOriginalPrice())
+                || Objects.isNull(newBeeMallGoods.getGoodsCategoryId())
+                || Objects.isNull(newBeeMallGoods.getSellingPrice())
+                || Objects.isNull(newBeeMallGoods.getStockNum())
+                || Objects.isNull(newBeeMallGoods.getGoodsSellStatus())
+                || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
+                || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent());
+
+    }
+
+    /**
      * 新增或修改秒杀商品
      */
     @RequestMapping(value = "/flashGoods/update")
@@ -258,10 +284,10 @@ public class NewBeeMallGoodsController {
         //判断传过来的商品是否在秒杀列表中
         FlashGoodsVo goods = newBeeMallGoodsService.getFlashGoodsById(goodsVo.getGoodsId());
         String result;
-        if (goods==null){
+        if (goods == null) {
             //新增
-            result= newBeeMallGoodsService.saveFlashGoods(goodsVo);
-        }else {
+            result = newBeeMallGoodsService.saveFlashGoods(goodsVo);
+        } else {
             //修改
             result = newBeeMallGoodsService.updateFlashGoods(goodsVo);
         }
@@ -271,14 +297,6 @@ public class NewBeeMallGoodsController {
             return ResultGenerator.genFailResult(result);
         }
     }
-
-
-
-
-
-
-
-
     /**
      * 批量修改销售状态
      */
@@ -297,7 +315,4 @@ public class NewBeeMallGoodsController {
             return ResultGenerator.genFailResult("修改失败");
         }
     }
-
-
-
 }

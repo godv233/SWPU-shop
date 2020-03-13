@@ -2,20 +2,13 @@ package com.swpu.shop.service;
 
 import com.swpu.shop.common.ServiceResultEnum;
 import com.swpu.shop.dao.IndexConfigMapper;
-import com.swpu.shop.dao.NewBeeMallGoodsMapper;
 import com.swpu.shop.entity.IndexConfig;
-import com.swpu.shop.entity.NewBeeMallGoods;
-import com.swpu.shop.util.BeanUtil;
 import com.swpu.shop.util.PageQueryUtil;
 import com.swpu.shop.util.PageResult;
-import com.swpu.shop.controller.vo.NewBeeMallIndexConfigGoodsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  * @author GODV
@@ -25,10 +18,6 @@ public class NewBeeMallIndexConfigService{
 
     @Autowired
     private IndexConfigMapper indexConfigMapper;
-
-    @Autowired
-    private NewBeeMallGoodsMapper goodsMapper;
-
     /**
      * 分页查询
      * @param pageUtil
@@ -70,10 +59,6 @@ public class NewBeeMallIndexConfigService{
         }
         return ServiceResultEnum.DB_ERROR.getResult();
     }
-
-//    public IndexConfig getIndexConfigById(Long id) {
-//        return null;
-//    }
 
     public Boolean deleteBatch(Long[] ids) {
         if (ids.length < 1) {

@@ -21,10 +21,8 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
+ * 文件下载和上传
+ * @author GODV
  */
 @Controller
 @RequestMapping("/admin")

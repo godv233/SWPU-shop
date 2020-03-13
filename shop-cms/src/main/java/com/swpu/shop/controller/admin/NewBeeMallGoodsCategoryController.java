@@ -54,7 +54,7 @@ public class NewBeeMallGoodsCategoryController {
     }
 
     /**
-     * 列表
+     * 列表和层级关系
      */
     @RequestMapping(value = "/categories/listForSelect", method = RequestMethod.GET)
     @ResponseBody

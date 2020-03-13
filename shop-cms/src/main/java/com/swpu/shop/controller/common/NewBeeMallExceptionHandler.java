@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * newbee-mall全局异常处理
+ * @author GODV
  */
 @RestControllerAdvice
 public class NewBeeMallExceptionHandler {

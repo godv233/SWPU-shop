@@ -1,6 +1,5 @@
 package com.swpu.shop.service;
 
-import com.swpu.shop.common.ServiceResultEnum;
 import com.swpu.shop.dao.NewBeeMallGoodsMapper;
 import com.swpu.shop.entity.NewBeeMallGoods;
 import com.swpu.shop.util.BeanUtil;
@@ -12,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * @author GODV
+ */
 @Service
 public class NewBeeMallGoodsService{
 

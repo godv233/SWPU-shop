@@ -2,6 +2,7 @@ package com.swpu.shop.shopflash.redis;
 
 /**
  * key的接口
+ * @author GODV
  */
 public interface KeyPrefix {
 	/**

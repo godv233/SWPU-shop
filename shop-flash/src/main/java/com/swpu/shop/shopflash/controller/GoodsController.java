@@ -1,6 +1,5 @@
 package com.swpu.shop.shopflash.controller;
 
-import com.swpu.shop.controller.vo.NewBeeMallGoodsDetailVO;
 import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.shopflash.common.Result;
 import com.swpu.shop.shopflash.redis.GoodsKey;

@@ -1,18 +1,16 @@
 package com.swpu.shop.service;
 
-import com.swpu.shop.common.ServiceResultEnum;
+
 import com.swpu.shop.dao.CarouselMapper;
 import com.swpu.shop.entity.Carousel;
 import com.swpu.shop.util.BeanUtil;
-import com.swpu.shop.util.PageQueryUtil;
-import com.swpu.shop.util.PageResult;
+
 import com.swpu.shop.controller.vo.NewBeeMallIndexCarouselVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

@@ -4,7 +4,6 @@ import com.swpu.shop.common.Constants;
 import com.swpu.shop.entity.MallUser;
 import com.swpu.shop.shopflash.redis.RedisService;
 import com.swpu.shop.shopflash.redis.UserKey;
-import com.swpu.shop.util.CookieUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,7 @@ public class UserService {
         return user;
     }
 
-    /*
+    /**
      * 生成一个cookie
      * @param user
      * @param token

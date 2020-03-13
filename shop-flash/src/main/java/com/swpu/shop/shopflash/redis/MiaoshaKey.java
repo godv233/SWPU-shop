@@ -2,6 +2,7 @@ package com.swpu.shop.shopflash.redis;
 
 /**
  * redis的秒杀相关的key
+ * @author GODV
  */
 public class MiaoshaKey extends BasePrefix {
 

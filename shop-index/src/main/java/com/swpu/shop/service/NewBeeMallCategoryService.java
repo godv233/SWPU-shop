@@ -2,14 +2,11 @@ package com.swpu.shop.service;
 
 import com.swpu.shop.common.Constants;
 import com.swpu.shop.common.NewBeeMallCategoryLevelEnum;
-import com.swpu.shop.common.ServiceResultEnum;
 import com.swpu.shop.controller.vo.NewBeeMallIndexCategoryVO;
 import com.swpu.shop.controller.vo.SecondLevelCategoryVO;
 import com.swpu.shop.dao.GoodsCategoryMapper;
 import com.swpu.shop.entity.GoodsCategory;
 import com.swpu.shop.util.BeanUtil;
-import com.swpu.shop.util.PageQueryUtil;
-import com.swpu.shop.util.PageResult;
 import com.swpu.shop.controller.vo.SearchPageCategoryVO;
 import com.swpu.shop.controller.vo.ThirdLevelCategoryVO;
 import org.springframework.beans.factory.annotation.Autowired;

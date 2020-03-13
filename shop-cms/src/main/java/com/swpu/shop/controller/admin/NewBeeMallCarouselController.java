@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 轮播图
  * @author GODV
  */
 @Controller
@@ -88,7 +89,7 @@ public class NewBeeMallCarouselController {
     }
 
     /**
-     * 轮播图详情 哈哈
+     * 轮播图详情
      */
     @GetMapping("/carousels/info/{id}")
     @ResponseBody

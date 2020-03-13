@@ -1,10 +1,13 @@
 package com.swpu.shop.controller.vo;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * @author GODV
  */
+@Data
 public class NewBeeMallUserVO implements Serializable {
 
     private Long userId;
@@ -17,53 +20,6 @@ public class NewBeeMallUserVO implements Serializable {
 
     private String address;
 
-    private int shopCartItemCount;
+    private Integer shopCartItemCount;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
-    }
-
-    public String getIntroduceSign() {
-        return introduceSign;
-    }
-
-    public void setIntroduceSign(String introduceSign) {
-        this.introduceSign = introduceSign;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getShopCartItemCount() {
-        return shopCartItemCount;
-    }
-
-    public void setShopCartItemCount(int shopCartItemCount) {
-        this.shopCartItemCount = shopCartItemCount;
-    }
 }

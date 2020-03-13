@@ -26,9 +26,6 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private GoodsService goodsService;
-
     /**
      * 订单详情
      * @param orderId

@@ -2,6 +2,7 @@ package com.swpu.shop.shopflash.redis;
 
 /**
  * 订单相关的key
+ * @author GODV
  */
 public class OrderKey extends BasePrefix {
 	private static final int ORDER_EXPIRE=3600*24;//一天

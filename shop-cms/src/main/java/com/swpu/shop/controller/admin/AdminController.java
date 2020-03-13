@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ * 登录控制器
  * @author GODV
  */
 @Controller

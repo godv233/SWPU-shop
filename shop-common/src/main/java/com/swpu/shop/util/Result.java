@@ -2,11 +2,10 @@ package com.swpu.shop.util;
 
 import java.io.Serializable;
 
+
 /**
- * @author 13
- * @qq交流群 796794009
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
+ * 前后端交互类
+ * @author GODV
  */
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;

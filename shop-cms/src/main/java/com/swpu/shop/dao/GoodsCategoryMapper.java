@@ -10,12 +10,6 @@ import java.util.List;
  * @author GODV
  */
 public interface GoodsCategoryMapper {
-    /**
-     * 删除
-     * @param categoryId
-     * @return
-     */
-    int deleteByPrimaryKey(Long categoryId);
 
     /**
      * 插入
