@@ -49,7 +49,7 @@ public class GoodsController {
     @ResponseBody
     public String goodsList(HttpServletRequest request, HttpServletResponse response, Model model) {
         //从缓存中取
-        String html = (String) redisService.get(GoodsKey.getGoodsList, "");
+        String html = (String) redisService.get(GoodsKey.getGoodsList, "list");
         if (!StringUtils.isEmpty(html)) {
             return html;
         }
@@ -61,7 +61,7 @@ public class GoodsController {
         WebContext context = new WebContext(request, response, request.getServletContext(), request.getLocale(), model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process("goods_list", context);
         if (!StringUtils.isEmpty(html)) {
-            redisService.set(GoodsKey.getGoodsList, "", html);
+            redisService.set(GoodsKey.getGoodsList, "list", html);
         }
         return html;
     }

@@ -6,7 +6,9 @@ package com.swpu.shop.shopflash.redis;
  * @date 2019/11/23 18:58
  */
 public class UserKey  extends BasePrefix{
-    private static final int TOKEN_EXPIRE=3600*24*2;//两天
+    //缓存1天
+    private static final int TOKEN_EXPIRE = 3600 * 24 * 1;
+
 
 
     public UserKey(int expireSeconds, String prefix) {
