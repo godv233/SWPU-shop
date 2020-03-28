@@ -34,12 +34,11 @@
             <div class="h3 ml20 mt20" th:text="${goodsDetail.goodsName}">NewBeeMall</div>
             <div class="sub_title mr40 ml20 mt10" th:text="${goodsDetail.goodsIntro}">NewBeeMall</div>
             <div class="item_price mr40 ml20 mt10">
-                <th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
+                <th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
                 <del>
-                    <th:block th:text="${goodsDetail.sellingPrice}+'.00 元'"></th:block>
+                    <th:block th:text="${goodsDetail.originalPrice}+'.00 元'"></th:block>
                 </del>
             </div>
-
             <div class="order">
                 <input class="car" type="button" th:onclick="'saveAndGoCart('+${goodsDetail.goodsId}+')'" value="立即选购"/>
                 <input class="car" type="button" th:onclick="'saveToCart('+${goodsDetail.goodsId}+')'" value="加入购物车"/>
