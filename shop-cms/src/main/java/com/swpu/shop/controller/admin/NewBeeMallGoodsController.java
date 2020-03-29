@@ -6,11 +6,14 @@ import com.swpu.shop.common.ServiceResultEnum;
 import com.swpu.shop.controller.vo.FlashGoodsVo;
 import com.swpu.shop.entity.GoodsCategory;
 import com.swpu.shop.entity.NewBeeMallGoods;
+import com.swpu.shop.redis.GoodsKey;
+import com.swpu.shop.redis.RedisService;
 import com.swpu.shop.service.NewBeeMallCategoryService;
 import com.swpu.shop.service.NewBeeMallGoodsService;
 import com.swpu.shop.util.PageQueryUtil;
 import com.swpu.shop.util.Result;
 import com.swpu.shop.util.ResultGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -35,6 +38,15 @@ public class NewBeeMallGoodsController {
     private NewBeeMallGoodsService newBeeMallGoodsService;
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
+    @Autowired
+    private RedisService redisService;
+
+    /**
+     * 删除商品列表缓存
+     */
+    public void deleteCache() {
+        redisService.delete(GoodsKey.getGoodsList, "list");
+    }
 
     /**
      * 返回商品页面
@@ -168,6 +180,7 @@ public class NewBeeMallGoodsController {
             //修改时数据回显
             request.setAttribute("goods",flashGoods);
         }
+        deleteCache();
         request.setAttribute("path", "flashGoods-edit");
         return "admin/newbee_mall_flashGoods_edit";
 
@@ -213,6 +226,7 @@ public class NewBeeMallGoodsController {
         if (ids.length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
+        deleteCache();
         if (newBeeMallGoodsService.deleteFlashGoodsBatch(ids)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -291,6 +305,7 @@ public class NewBeeMallGoodsController {
             //修改
             result = newBeeMallGoodsService.updateFlashGoods(goodsVo);
         }
+        deleteCache();
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
