@@ -123,7 +123,7 @@ public class FlashSaleController{
         //接口优化
         //1.预减库存
         long decrease = redisService.decrease(GoodsKey.getGoodsStock, "" + goodsId);
-        if (decrease <= 0) {
+        if (decrease < 0) {
             return Result.error(CodeMsg.MIAOSHA_FAIL);
         }
         //判断是否秒杀过了
