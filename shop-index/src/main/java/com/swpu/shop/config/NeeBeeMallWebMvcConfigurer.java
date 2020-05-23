@@ -38,7 +38,7 @@ public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/shop-cart/**")
                 .addPathPatterns("/saveOrder")
                 .addPathPatterns("/orders")
-                .addPathPatterns("/orders/**")            
+                .addPathPatterns("/orders/**")
                 .addPathPatterns("/personal")
                 .addPathPatterns("/personal/updateInfo")
                 .addPathPatterns("/selectPayType")
